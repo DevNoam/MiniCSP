@@ -66,7 +66,7 @@ namespace _365.Core
 
             string logInfo = userName + " made a change to: " + changesMade + " At: " + newAccountProp.modifyDate;
 
-            MessageBox.Show(logInfo);
+            //MessageBox.Show(logInfo);
             if (changedProps.Count <= 0)
                 return false;
             return DatabaseManager.UpdateAccount(newAccountProp.id, changedProps, logInfo);

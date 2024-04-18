@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MiniCSP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5911ba3138c378efe305dc38d821d99d7889c66")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4e9e7fab0c1465a5571f13487894f259d161432")]
 [assembly: System.Reflection.AssemblyProductAttribute("MiniCSP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MiniCSP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

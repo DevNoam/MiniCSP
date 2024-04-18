@@ -238,7 +238,8 @@
             Edit.BackColor = Color.Transparent;
             Edit.BackgroundImage = Properties.Resources.Settings;
             Edit.BackgroundImageLayout = ImageLayout.Zoom;
-            Edit.FlatAppearance.BorderColor = Color.Black;
+            Edit.Enabled = false;
+            Edit.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
             Edit.FlatAppearance.BorderSize = 0;
             Edit.FlatAppearance.MouseDownBackColor = Color.Transparent;
             Edit.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
@@ -252,7 +253,6 @@
             Edit.TabIndex = 8;
             Edit.UseMnemonic = false;
             Edit.UseVisualStyleBackColor = false;
-            Edit.Visible = false;
             Edit.Click += Edit_Click;
             // 
             // Logs
@@ -378,7 +378,7 @@
             // 
             AddAccount.BackgroundImage = Properties.Resources.plus_dynamic_gradient;
             AddAccount.BackgroundImageLayout = ImageLayout.Stretch;
-            AddAccount.FlatAppearance.BorderColor = Color.DarkTurquoise;
+            AddAccount.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
             AddAccount.FlatAppearance.BorderSize = 0;
             AddAccount.FlatAppearance.MouseDownBackColor = Color.Transparent;
             AddAccount.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
