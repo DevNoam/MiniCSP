@@ -18,7 +18,6 @@ namespace _365.Core
         public AccountProp newAccountProp { get; set; }
         public bool PublishEdit(AccountProp newAccountProp)
         {
-
             var changedProps = new Dictionary<string, object>();
             #region props compare
             if (newAccountProp.id != oldAccountProp.id)
@@ -27,27 +26,27 @@ namespace _365.Core
             }
             if (newAccountProp.email != oldAccountProp.email)
             {
-                changedProps["email"] = newAccountProp.email;
+                changedProps["Email"] = newAccountProp.email;
             }
             if (newAccountProp.password != oldAccountProp.password)
             {
-                changedProps["password"] = newAccountProp.password;
+                changedProps["Password"] = newAccountProp.password;
             }
             if (newAccountProp.mfaToken != oldAccountProp.mfaToken)
             {
-                changedProps["mfaToken"] = newAccountProp.mfaToken;
+                changedProps["MFA"] = newAccountProp.mfaToken;
             }
             if (newAccountProp.domainMicrosoft != oldAccountProp.domainMicrosoft)
             {
-                changedProps["domainMicrosoft"] = newAccountProp.domainMicrosoft;
+                changedProps["DomainMicrosoft"] = newAccountProp.domainMicrosoft;
             }
             if (newAccountProp.phone != oldAccountProp.phone)
             {
-                changedProps["phone"] = newAccountProp.phone;
+                changedProps["Phone"] = newAccountProp.phone;
             }
             if (newAccountProp.notes != oldAccountProp.notes)
             {
-                changedProps["notes"] = newAccountProp.notes;
+                changedProps["Notes"] = newAccountProp.notes;
             }
             if (newAccountProp.isArchived != oldAccountProp.isArchived)
             {
@@ -70,51 +69,7 @@ namespace _365.Core
             MessageBox.Show(logInfo);
             if (changedProps.Count <= 0)
                 return false;
-            return Upload(newAccountProp.id, changedProps, logInfo);
-        }
-
-
-        bool Upload(int accountId, Dictionary<string, object> changedProps, string logToAdd)
-        {
-            string query = "UPDATE Account SET ";
-            bool first = true;
-
-            // Add changed properties to the query
-            foreach (var prop in changedProps)
-            {
-                if (!first)
-                {
-                    query += ", ";
-                }
-                query += $"{prop.Key} = @{prop.Key}";
-                first = false;
-            }
-
-            // Add WHERE clause
-            query += " WHERE Id = @Id";
-
-            // Open connection to the database
-            using (SqliteConnection connection = new SqliteConnection(DatabaseManager.connectionString))
-            {
-                connection.Open();
-
-                // Create and execute the SQL command
-                using (SqliteCommand command = new SqliteCommand(query, connection))
-                {
-                    // Set parameters
-                    foreach (var prop in changedProps)
-                    {
-                        command.Parameters.AddWithValue($"@{prop.Key}", prop.Value);
-                    }
-                    command.Parameters.AddWithValue("@Id", accountId);
-
-                    // Execute the command
-                    int rowsAffected = command.ExecuteNonQuery();
-
-                    // Check if any rows were affected
-                    return rowsAffected > 0;
-                }
-            }
+            return DatabaseManager.UpdateAccount(newAccountProp.id, changedProps, logInfo);
         }
     }
 }
