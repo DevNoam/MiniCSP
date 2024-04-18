@@ -80,7 +80,7 @@ namespace _365
         private void AccountList_SelectedIndexChanged(object sender, EventArgs e)
         {
             mfaToken = null;
-            Edit.Visible = false;
+            Edit.Enabled = false;
             if (countdownTimer != null)
             {
                 countdownTimer.Stop();
@@ -107,7 +107,7 @@ namespace _365
                     isArchived.Checked = (account.isArchived == 1) ? true : false;
                     ModifiedDate.Text = "Last modified: " + account.modifyDate;
                     SelectACustomer.Visible = false;
-                    Edit.Visible = true;
+                    Edit.Enabled = true;
 
                     TokenGenerator(mfaToken);
                 }
@@ -158,7 +158,8 @@ namespace _365
                 MFATimer.Value = (int)remainingTime.TotalSeconds;
             if (remainingTime <= TimeSpan.Zero)
             {
-                countdownTimer.Stop();
+                if(countdownTimer != null)
+                    countdownTimer.Stop();
                 if (Clipboard.GetText() == MFA.Text)
                     Clipboard.Clear();
                 if (mfaToken != null)
@@ -355,7 +356,6 @@ namespace _365
                     MFA.Text = mfaToken;
                     editMode = true;
                     Edit.BackgroundImage = Properties.Resources.Save;
-                    Edit.Refresh();
                 }
                 else if (edit is false)
                 {
@@ -374,7 +374,6 @@ namespace _365
 
                     editMode = false;
                     Edit.BackgroundImage = Properties.Resources.Settings;
-                    Edit.Refresh();
 
                     TokenGenerator(mfaToken);
                 }
@@ -394,7 +393,8 @@ namespace _365
         {
             CreateEntry entryForm = new CreateEntry();
             entryForm.ShowDialog();
-            FetchAll(entryForm.accEntry.id);
+            if(entryForm.accEntry != null)
+                FetchAll(entryForm.accEntry.id);
         }
 
     }
