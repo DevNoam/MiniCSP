@@ -26,7 +26,9 @@ namespace _365.Core.Database.Functions
                         {
                             var id = reader.GetInt32(0);
                             var customerName = reader.GetString(1);
-                            Accounts.Add(new AccountListEntry { id = id, customerName = customerName });
+
+                            Accounts.Add(new AccountListEntry { id = id, customerName = customerName});
+
                         }
                     }
                 }

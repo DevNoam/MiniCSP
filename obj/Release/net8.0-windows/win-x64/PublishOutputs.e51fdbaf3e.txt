@@ -1,0 +1,8 @@
+C:\Users\noam1\Desktop\365KeePass\bin\Release\net8.0-windows\publish\win-x64\MiniCSP.pdb
+C:\Users\noam1\Desktop\365KeePass\bin\Release\net8.0-windows\publish\win-x64\D3DCompiler_47_cor3.dll
+C:\Users\noam1\Desktop\365KeePass\bin\Release\net8.0-windows\publish\win-x64\PenImc_cor3.dll
+C:\Users\noam1\Desktop\365KeePass\bin\Release\net8.0-windows\publish\win-x64\PresentationNative_cor3.dll
+C:\Users\noam1\Desktop\365KeePass\bin\Release\net8.0-windows\publish\win-x64\vcruntime140_cor3.dll
+C:\Users\noam1\Desktop\365KeePass\bin\Release\net8.0-windows\publish\win-x64\wpfgfx_cor3.dll
+C:\Users\noam1\Desktop\365KeePass\bin\Release\net8.0-windows\publish\win-x64\e_sqlite3.dll
+C:\Users\noam1\Desktop\365KeePass\bin\Release\net8.0-windows\publish\win-x64\MiniCSP.exe

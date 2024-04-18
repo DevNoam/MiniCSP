@@ -1,4 +1,8 @@
 using _365.Core.Database;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace _365
 {
@@ -7,29 +11,28 @@ namespace _365
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
+        /// 
+
+
+
+
         [STAThread]
         static void Main(string[] args)
         {
-            //if (args.Length < 1)
-            //{
-            //    MessageBox.Show("Database path is misconfigured!", "DB Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    System.Environment.Exit(0);
-            //}
-
+            ApplicationConfiguration.Initialize();
+            
             //DB Init
-            if (DatabaseManager.Init(@"C:\Users\noam1\Desktop") == true)
+            if (DatabaseManager.Init())
             {
             }
             else
             {
-                MessageBox.Show("No connection to the Database", "DB Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No connection to the Database", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //try again?
+                
                 System.Environment.Exit(0);
             }
-
-
-            //If success ->
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new AppDash());
         }
     }
 }

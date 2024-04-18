@@ -1,5 +1,6 @@
 ﻿using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
+using System.Data;
 
 namespace _365.Core.Database.Functions
 {
@@ -25,22 +26,26 @@ namespace _365.Core.Database.Functions
                         {
                             var customerName = reader.GetString(1);
                             DateTime modDate = DateTime.Now;
-                            DateTime.TryParse(reader.GetString(reader.GetOrdinal("ModifyDate")), out modDate);
+
+                            if (!reader.IsDBNull(reader.GetOrdinal("ModifyDate")))
+                                DateTime.TryParse(reader.GetString(reader.GetOrdinal("ModifyDate")), out modDate);
+                            else
+                                DateTime.TryParse(reader.GetString(reader.GetOrdinal("CreationDate")), out modDate);
 
                             account = new AccountProp
                             {
                                 id = id,
-                                customerName = reader.GetString(reader.GetOrdinal("CustomerName")),
-                                domain = reader.GetString(reader.GetOrdinal("Domain")),
-                                domainMicrosoft = reader.GetString(reader.GetOrdinal("domainMicrosoft")),
-                                email = reader.GetString(reader.GetOrdinal("Email")),
-                                password = reader.GetString(reader.GetOrdinal("Password")),
-                                mfaToken = reader.GetString(reader.GetOrdinal("MFA")),
-                                crmNumber = reader.GetString(reader.GetOrdinal("CRM")),
-                                phone = reader.GetString(reader.GetOrdinal("Phone")),
-                                notes = reader.GetString(reader.GetOrdinal("Notes")),
-                                modifyDate = modDate,
-                                isArchived = reader.GetInt32(reader.GetOrdinal("isArchived"))
+                                customerName = reader.IsDBNull(reader.GetOrdinal("CustomerName")) ? null : reader.GetString(reader.GetOrdinal("CustomerName")),
+                                domain = reader.IsDBNull(reader.GetOrdinal("Domain")) ? null : reader.GetString(reader.GetOrdinal("Domain")),
+                                domainMicrosoft = reader.IsDBNull(reader.GetOrdinal("domainMicrosoft")) ? null : reader.GetString(reader.GetOrdinal("domainMicrosoft")),
+                                email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
+                                password = reader.IsDBNull(reader.GetOrdinal("Password")) ? null : reader.GetString(reader.GetOrdinal("Password")),
+                                mfaToken = reader.IsDBNull(reader.GetOrdinal("MFA")) ? null : reader.GetString(reader.GetOrdinal("MFA")),
+                                crmNumber = reader.IsDBNull(reader.GetOrdinal("CRM")) ? null : reader.GetString(reader.GetOrdinal("CRM")),
+                                phone = reader.IsDBNull(reader.GetOrdinal("Phone")) ? null : reader.GetString(reader.GetOrdinal("Phone")),
+                                notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? null : reader.GetString(reader.GetOrdinal("Notes")),
+                                modifyDate = reader.IsDBNull(reader.GetOrdinal("ModifyDate")) ? DateTime.Now : DateTime.Parse(reader.GetString(reader.GetOrdinal("ModifyDate"))),
+                                isArchived = reader.IsDBNull(reader.GetOrdinal("isArchived")) ? 0 : reader.GetInt32(reader.GetOrdinal("isArchived"))
                                 //creationDate = reader.GetString(reader.GetOrdinal("CustomerName")),
                             };
                         }
