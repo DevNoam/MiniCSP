@@ -70,9 +70,9 @@
             label2.ForeColor = SystemColors.Control;
             label2.Location = new Point(66, 59);
             label2.Name = "label2";
-            label2.Size = new Size(121, 15);
+            label2.Size = new Size(129, 15);
             label2.TabIndex = 2;
-            label2.Text = "CRM Customer name";
+            label2.Text = "* CRM Customer name";
             // 
             // label3
             // 
@@ -80,9 +80,9 @@
             label3.ForeColor = SystemColors.Control;
             label3.Location = new Point(66, 113);
             label3.Name = "label3";
-            label3.Size = new Size(78, 15);
+            label3.Size = new Size(86, 15);
             label3.TabIndex = 3;
-            label3.Text = "CRM number";
+            label3.Text = "* CRM number";
             // 
             // CRMNumber
             // 
@@ -116,9 +116,9 @@
             label5.ForeColor = SystemColors.Control;
             label5.Location = new Point(66, 170);
             label5.Name = "label5";
-            label5.Size = new Size(212, 15);
+            label5.Size = new Size(220, 15);
             label5.TabIndex = 6;
-            label5.Text = "Tenant domain (OnMicrosoft/ Indirect)";
+            label5.Text = "* Tenant domain (OnMicrosoft/ Indirect)";
             // 
             // resellerCheckBox
             // 

@@ -56,6 +56,11 @@ namespace _365
         {
             if (resellerCheckBox.Checked == false && resellerCRMParent.Text != null)
                 resellerCRMParent.Text = null;
+            if (string.IsNullOrWhiteSpace(CRMCustomerName.Text) || string.IsNullOrWhiteSpace(CRMNumber.Text) || string.IsNullOrWhiteSpace(TenantDomain.Text))
+            { 
+                MessageBox.Show("Cannot leave blank fields", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
             NewEntry entry = new NewEntry()
             {
@@ -66,11 +71,9 @@ namespace _365
                 resellerCRMParent = resellerCRMParent.Text
             };
 
-
-
             if (DatabaseManager.SearchEntries(entry.crmNumber).Count() > 0)
             {
-                var crmExist = MessageBox.Show("This CRM number exist in the databse, do you want to continue?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+                var crmExist = MessageBox.Show("This CRM number exist in the databse, do you wish to continue?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
                 if (crmExist == DialogResult.No)
                     return;
             }
