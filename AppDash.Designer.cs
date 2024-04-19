@@ -246,10 +246,10 @@
             Edit.FlatStyle = FlatStyle.Flat;
             Edit.ForeColor = Color.Transparent;
             Edit.Image = Properties.Resources.Settings;
-            Edit.Location = new Point(299, 2);
+            Edit.Location = new Point(316, 2);
             Edit.Margin = new Padding(3, 4, 3, 4);
             Edit.Name = "Edit";
-            Edit.Size = new Size(70, 50);
+            Edit.Size = new Size(53, 57);
             Edit.TabIndex = 8;
             Edit.UseMnemonic = false;
             Edit.UseVisualStyleBackColor = false;
@@ -394,15 +394,14 @@
             // 
             // CustomerName
             // 
-            CustomerName.Anchor = AnchorStyles.Top;
-            CustomerName.AutoSize = true;
+            CustomerName.Anchor = AnchorStyles.Left;
             CustomerName.FlatStyle = FlatStyle.Flat;
-            CustomerName.Font = new Font("Roboto", 16F, FontStyle.Bold);
-            CustomerName.Location = new Point(46, 7);
+            CustomerName.Font = new Font("Roboto", 18F, FontStyle.Bold);
+            CustomerName.Location = new Point(43, 2);
             CustomerName.Name = "CustomerName";
-            CustomerName.Size = new Size(186, 27);
+            CustomerName.Size = new Size(264, 32);
             CustomerName.TabIndex = 3;
-            CustomerName.Text = "Select customer";
+            CustomerName.Text = "Select customer 11111111111";
             CustomerName.TextAlign = ContentAlignment.MiddleLeft;
             CustomerName.Click += CustomerName_Click;
             // 
@@ -533,10 +532,10 @@
             Crm.Anchor = AnchorStyles.Top;
             Crm.AutoSize = true;
             Crm.FlatStyle = FlatStyle.Flat;
-            Crm.Font = new Font("Roboto", 16F, FontStyle.Bold);
+            Crm.Font = new Font("Roboto", 16F);
             Crm.Location = new Point(43, 32);
             Crm.Name = "Crm";
-            Crm.Size = new Size(68, 27);
+            Crm.Size = new Size(64, 27);
             Crm.TabIndex = 25;
             Crm.Text = "CRM:";
             Crm.TextAlign = ContentAlignment.MiddleLeft;
