@@ -1,4 +1,6 @@
-﻿namespace _365.Core.Properties
+﻿using Microsoft.VisualBasic.Logging;
+
+namespace _365.Core.Properties
 {
     public class AccountProp
     {
@@ -15,13 +17,6 @@
         public DateTime creationDate { get; set; }
         public DateTime modifyDate { get; set; }
         public int isArchived { get; set; }
-        public log[]? logs { get; set; }
-    }
-
-    public class log
-    { 
-        public string? maintainer { get; set; }
-        public string? operation { get; set; }
-        public DateTime dateOfOperation { get; set; }
+        //public log[]? logs { get; set; }
     }
 }
