@@ -3,6 +3,7 @@ using _365.Core.Database;
 using _365.Core.Properties;
 using Sungaila.ImmersiveDarkMode.WinForms;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 
@@ -15,6 +16,7 @@ namespace _365
         private DateTime endTime;
         private int selectedId = -1;
         private bool editMode = false;
+        private string AppTitle;
 
         #region contextbutton
 
@@ -70,6 +72,7 @@ namespace _365
         public AppDash()
         {
             InitializeComponent();
+            AppTitle = this.Text;
             this.SetTitlebarTheme();
         }
         private void AppDash_Shown(object sender, EventArgs e)
@@ -97,6 +100,11 @@ namespace _365
                     //Set properties
                     selectedId = buttonId.id;
                     CustomerName.Text = account.customerName;
+                    while (CustomerName.Width < System.Windows.Forms.TextRenderer.MeasureText(CustomerName.Text,
+                    new Font(CustomerName.Font.FontFamily, CustomerName.Font.Size, CustomerName.Font.Style)).Width)
+                    {
+                        CustomerName.Font = new Font(CustomerName.Font.FontFamily, CustomerName.Font.Size - 0.5f, CustomerName.Font.Style);
+                    }
                     Crm.Text = "CRM: " + account.crmNumber;
                     Email.Text = account.email;
                     Password.Text = account.password;
@@ -158,7 +166,7 @@ namespace _365
                 MFATimer.Value = (int)remainingTime.TotalSeconds;
             if (remainingTime <= TimeSpan.Zero)
             {
-                if(countdownTimer != null)
+                if (countdownTimer != null)
                     countdownTimer.Stop();
                 if (Clipboard.GetText() == MFA.Text)
                     Clipboard.Clear();
@@ -181,6 +189,7 @@ namespace _365
                     foreach (var result in results)
                         AccountList.Items.Add(result);
                 }
+                UpdateEntriesNumber();
             }
             else if (string.IsNullOrEmpty(search))
             {
@@ -204,6 +213,7 @@ namespace _365
                 if (selectedId != -1 && account.id == selectId)
                     AccountList.SelectedItem = account;
             }
+            UpdateEntriesNumber();
         }
         private void Crm_Click(object sender, EventArgs e)
         {
@@ -256,6 +266,8 @@ namespace _365
                 Password.PasswordChar = '●';
         }
 
+        private void UpdateEntriesNumber() => this.Text = AppTitle + " Found: (" + AccountList.Items.Count.ToString() + ") accounts";
+
         AccountEdit EditAccount;
         private void Edit_Click(object sender, EventArgs e)
         {
@@ -282,25 +294,31 @@ namespace _365
             }
             else if (editMode is true)
             {
+                AccountProp newAccountProp = new AccountProp
+                {
+                    id = selectedId,
+                    domainMicrosoft = OnMicrosoftDomain.Text,
+                    email = Email.Text,
+                    isArchived = Convert.ToInt32(isArchived.Checked),
+                    mfaToken = MFA.Text,
+                    phone = Phone.Text,
+                    password = Password.Text,
+                    notes = Notes.Text,
+                    modifyDate = DateTime.Now
+                };
+
+                if (newAccountProp.domainMicrosoft == EditAccount.oldAccountProp.domainMicrosoft && newAccountProp.email == EditAccount.oldAccountProp.email &&
+                    newAccountProp.isArchived == EditAccount.oldAccountProp.isArchived && newAccountProp.phone == EditAccount.oldAccountProp.phone &&
+                    newAccountProp.password == EditAccount.oldAccountProp.password && newAccountProp.notes == EditAccount.oldAccountProp.notes && newAccountProp.mfaToken == EditAccount.oldAccountProp.mfaToken)
+                {
+                    CancelPuslish();
+                    return;
+                }
+
                 var selection = MessageBox.Show("Save?", System.Windows.Forms.Application.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                 if (selection == DialogResult.Yes)
                 {
-                    AccountProp newAccountProp = new AccountProp
-                    {
-                        id = selectedId,
-
-                        domainMicrosoft = OnMicrosoftDomain.Text,
-                        email = Email.Text,
-                        isArchived = Convert.ToInt32(isArchived.Checked),
-                        mfaToken = MFA.Text,
-                        phone = Phone.Text,
-                        password = Password.Text,
-                        notes = Notes.Text,
-                        modifyDate = DateTime.Now
-                    };
-
-
                     if (EditAccount.PublishEdit(newAccountProp) == true)
                     {
                         //Published
@@ -316,12 +334,12 @@ namespace _365
                 }
                 else if (selection == DialogResult.No)
                 {
-                    CancelPuslich();
+                    CancelPuslish();
                 }
             }
 
 
-            void CancelPuslich()
+            void CancelPuslish()
             {
                 OnMicrosoftDomain.Text = EditAccount.oldAccountProp.domainMicrosoft;
                 Email.Text = EditAccount.oldAccountProp.email;
@@ -393,9 +411,8 @@ namespace _365
         {
             CreateEntry entryForm = new CreateEntry();
             entryForm.ShowDialog();
-            if(entryForm.accEntry != null)
+            if (entryForm.accEntry != null)
                 FetchAll(entryForm.accEntry.id);
         }
-
     }
 }
