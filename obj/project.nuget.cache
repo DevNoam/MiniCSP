@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YKrp/j1Yd1CTGCTtVykSPuxMmJ4c4iH2Ja9tgQ3+yeaIMzfT4p2jhghDzc2cUk+FSG89Hu2DgAR9DSxDPee0qw==",
+  "dgSpecHash": "wxsJV5x1xibAm/qolZuJn80+s2DGE6pLAlEExp/cZW0RZWHyF6qHyRlV896mQ5xP2yemZCz7WOCAvzRrqAaEJg==",
   "success": true,
   "projectFilePath": "C:\\Users\\noam1\\Desktop\\365KeePass\\MiniCSP.csproj",
   "expectedPackageFiles": [
@@ -17,7 +17,19 @@
     "C:\\Users\\noam1\\.nuget\\packages\\sungaila.immersivedarkmode.winforms\\1.0.0\\sungaila.immersivedarkmode.winforms.1.0.0.nupkg.sha512",
     "C:\\Users\\noam1\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\noam1\\.nuget\\packages\\system.security.accesscontrol\\5.0.0\\system.security.accesscontrol.5.0.0.nupkg.sha512",
-    "C:\\Users\\noam1\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512"
+    "C:\\Users\\noam1\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
+    "C:\\Users\\noam1\\.nuget\\packages\\zxing.net\\0.12.0\\zxing.net.0.12.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'ZXing.Net 0.12.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "ZXing.Net",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    }
+  ]
 }

@@ -50,3 +50,5 @@ C:\Users\noam1\Desktop\365KeePass\obj\Debug\net8.0-windows\refint\MiniCSP.dll
 C:\Users\noam1\Desktop\365KeePass\obj\Debug\net8.0-windows\MiniCSP.pdb
 C:\Users\noam1\Desktop\365KeePass\obj\Debug\net8.0-windows\MiniCSP.genruntimeconfig.cache
 C:\Users\noam1\Desktop\365KeePass\obj\Debug\net8.0-windows\ref\MiniCSP.dll
+C:\Users\noam1\Desktop\365KeePass\bin\Debug\net8.0-windows\zxing.dll
+C:\Users\noam1\Desktop\365KeePass\bin\Debug\net8.0-windows\zxing.presentation.dll

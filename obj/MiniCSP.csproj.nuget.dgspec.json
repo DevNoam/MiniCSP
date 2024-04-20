@@ -60,6 +60,10 @@
             "Sungaila.ImmersiveDarkMode.WinForms": {
               "target": "Package",
               "version": "[1.0.0, )"
+            },
+            "ZXing.Net": {
+              "target": "Package",
+              "version": "[0.12.0, )"
             }
           },
           "imports": [
