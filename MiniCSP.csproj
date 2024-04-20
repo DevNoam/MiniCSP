@@ -35,6 +35,7 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.3" />
     <PackageReference Include="Otp.NET" Version="1.3.0" />
     <PackageReference Include="Sungaila.ImmersiveDarkMode.WinForms" Version="1.0.0" />
+    <PackageReference Include="ZXing.Net" Version="0.12.0" />
   </ItemGroup>
 
   <ItemGroup>

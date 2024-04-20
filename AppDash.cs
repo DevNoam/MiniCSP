@@ -372,6 +372,8 @@ namespace _365
                     isArchived.Enabled = true;
                     MFATimer.Visible = false;
                     MFA.Text = mfaToken;
+                    UploadQR.Visible = true;
+                    UploadQR.Enabled = true;
                     editMode = true;
                     Edit.BackgroundImage = Properties.Resources.Save;
                 }
@@ -389,7 +391,8 @@ namespace _365
                     Notes.ReadOnly = true;
                     isArchived.Enabled = false;
                     MFATimer.Visible = true;
-
+                    UploadQR.Visible = false;
+                    UploadQR.Enabled = false;
                     editMode = false;
                     Edit.BackgroundImage = Properties.Resources.Settings;
 
@@ -413,6 +416,34 @@ namespace _365
             entryForm.ShowDialog();
             if (entryForm.accEntry != null)
                 FetchAll(entryForm.accEntry.id);
+        }
+
+        private void UploadQR_Click(object sender, EventArgs e)
+        {
+            ExtractQR extractQR = new ExtractQR();
+            QRTotp TOTP = extractQR.GetTOTP();
+
+            if (!string.IsNullOrEmpty(TOTP.secret))
+            {
+                if (Email.Text.Contains(TOTP.mail))
+                {
+                    //Do nothing, thats okay.
+                }
+                else if (string.IsNullOrWhiteSpace(Email.Text))
+                    Email.Text = TOTP.mail;
+                else
+                {
+                    MessageBox.Show("Mail does not match this MFA key!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                MFA.Text = TOTP.secret;
+            }
+            else if (TOTP.secret == "error")
+            { 
+                MessageBox.Show("Reading QR failed", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
     }
 }
