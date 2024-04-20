@@ -163,6 +163,16 @@ namespace _365.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap picture_front_gradient {
+            get {
+                object obj = ResourceManager.GetObject("picture-front-gradient", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap plus_dynamic_gradient {
             get {
                 object obj = ResourceManager.GetObject("plus-dynamic-gradient", resourceCulture);

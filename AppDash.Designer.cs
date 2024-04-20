@@ -55,6 +55,7 @@
             CustomerName = new Label();
             OnMicrosoftDomain = new TextBox();
             panel1 = new Panel();
+            UploadQR = new Button();
             SelectACustomer = new Panel();
             label4 = new Label();
             label8 = new Label();
@@ -446,10 +447,34 @@
             panel1.Controls.Add(pictureBox8);
             panel1.Controls.Add(Edit);
             panel1.Controls.Add(Crm);
+            panel1.Controls.Add(UploadQR);
             panel1.Location = new Point(232, 6);
             panel1.Name = "panel1";
             panel1.Size = new Size(375, 585);
             panel1.TabIndex = 24;
+            // 
+            // UploadQR
+            // 
+            UploadQR.BackColor = Color.Transparent;
+            UploadQR.BackgroundImage = Properties.Resources.picture_front_gradient;
+            UploadQR.BackgroundImageLayout = ImageLayout.Zoom;
+            UploadQR.Enabled = false;
+            UploadQR.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
+            UploadQR.FlatAppearance.BorderSize = 0;
+            UploadQR.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            UploadQR.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
+            UploadQR.FlatStyle = FlatStyle.Flat;
+            UploadQR.ForeColor = Color.Transparent;
+            UploadQR.Image = Properties.Resources.Settings;
+            UploadQR.Location = new Point(218, 189);
+            UploadQR.Margin = new Padding(3, 4, 3, 4);
+            UploadQR.Name = "UploadQR";
+            UploadQR.Size = new Size(41, 35);
+            UploadQR.TabIndex = 51;
+            UploadQR.UseMnemonic = false;
+            UploadQR.UseVisualStyleBackColor = false;
+            UploadQR.Visible = false;
+            UploadQR.Click += UploadQR_Click;
             // 
             // SelectACustomer
             // 
@@ -609,5 +634,6 @@
         private TextBox Phone;
         private Label ModifiedDate;
         private Label label8;
+        private Button UploadQR;
     }
 }
