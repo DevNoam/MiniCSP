@@ -7,7 +7,6 @@ namespace _365.Core.Properties
         public int id { get; set; }
         public string? customerName { get; set; }
         public string? domain { get; set; }
-        public string? domainMicrosoft { get; set; }
         public string? email { get; set; }
         public string? password { get; set; }
         public string? mfaToken { get; set; }

@@ -1,4 +1,11 @@
-﻿using Microsoft.Data.Sqlite;
+﻿/////////////////////////////////////
+////DevNoam (noamsapir.me) 2024  ////
+/////////////////////////////////////
+//// Database initializer      //////
+/////////////////////////////////////
+
+
+using Microsoft.Data.Sqlite;
 using Microsoft.Win32;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
@@ -7,9 +14,10 @@ namespace _365.Core.Database.Functions
 {
     public static class _InitializeDatabase
     {
-        const string dbName = "365DB.db";
+        public const string dbName = "365DB.db";
+        const string dbsecret = "";
         private readonly static string registryLocation = $@"Software\DevNoam\{Application.ProductName}";
-        internal static bool Init()
+        internal static bool Init(string inKey = "")
         {
             string path = GetDatabaseLocation();
             if (path == null)
@@ -18,13 +26,23 @@ namespace _365.Core.Database.Functions
             string databasePath = path;
             DatabaseManager.connectionString = $"Data Source={databasePath}";
 
+
+            //Encryption?
+            //requires nuget package: SQLitePCLRaw.bundle_e_sqlcipher
+            //DatabaseManager.connectionString = new SqliteConnectionStringBuilder(DatabaseManager.connectionString)
+            //{
+            //    Mode = SqliteOpenMode.ReadWriteCreate
+            //    Password = @"J<_x9E95wYXN£~e8Fs=L8gKD0,2[E\\"
+            //}.ToString();
+
+
             if (!File.Exists(databasePath))
             {
                 Console.WriteLine("Database does not exist. Creating a new one...");
                 try
                 {
                     // Create a new SQLite database file
-                    using (var connection = new SqliteConnection($"Data Source={databasePath}"))
+                    using (var connection = new SqliteConnection(DatabaseManager.connectionString))
                     {
                         connection.Open();
 
@@ -32,8 +50,7 @@ namespace _365.Core.Database.Functions
                         var createTableSql = @"CREATE TABLE ""Account"" (
 	                    ""Id""	INTEGER NOT NULL UNIQUE,
 	                    ""CustomerName""	TEXT NOT NULL,
-	                    ""Domain""	TEXT UNIQUE,
-	                    ""DomainMicrosoft""	TEXT NOT NULL,
+	                    ""Domain""	TEXT,
 	                    ""Email""	TEXT,
 	                    ""Password""	TEXT,
 	                    ""MFA""	TEXT,
@@ -44,8 +61,6 @@ namespace _365.Core.Database.Functions
 	                    ""ModifyDate""	TEXT,
 	                    ""Logs""	BLOB,
 	                    ""isArchived""	INTEGER,
-	                    ""ResellerTenant""	INTEGER,
-	                    ""ResellerParent""	TEXT,
 	                    PRIMARY KEY(""Id"")
                         )";
 
@@ -71,7 +86,7 @@ namespace _365.Core.Database.Functions
             }
         }
 
-        private static string GetDatabaseLocation()
+        public static string GetDatabaseLocation()
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey(registryLocation);
             object pathObject = key.GetValue("path") ?? string.Empty;

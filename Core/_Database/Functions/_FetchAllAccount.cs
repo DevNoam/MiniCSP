@@ -1,4 +1,10 @@
-﻿using Microsoft.Data.Sqlite;
+﻿/////////////////////////////////////
+////DevNoam (noamsapir.me) 2024  ////
+/////////////////////////////////////
+//// This function fetches     //////
+////  all accounts to the list //////
+/////////////////////////////////////
+using Microsoft.Data.Sqlite;
 using _365.Core.Properties;
 
 namespace _365.Core.Database.Functions
@@ -9,7 +15,7 @@ namespace _365.Core.Database.Functions
         {
             List<AccountListEntry> Accounts = new List<AccountListEntry>();
             // SQL query to retrieve customer entries
-            string query = "SELECT Id, CustomerName FROM Account";
+            string query = "SELECT Id, CustomerName, isArchived FROM Account";
 
             // Open connection to the database
             using (SqliteConnection connection = new SqliteConnection(DatabaseManager.connectionString))
@@ -26,8 +32,10 @@ namespace _365.Core.Database.Functions
                         {
                             var id = reader.GetInt32(0);
                             var customerName = reader.GetString(1);
+                            var isArchivedVar = reader.IsDBNull(reader.GetOrdinal("isArchived")) ? 0 : reader.GetInt32(reader.GetOrdinal("isArchived"));
+                            bool isArchived = isArchivedVar == 1 ? true : false;
 
-                            Accounts.Add(new AccountListEntry { id = id, customerName = customerName});
+                            Accounts.Add(new AccountListEntry { id = id, customerName = customerName, isArchived = isArchived });
 
                         }
                     }
