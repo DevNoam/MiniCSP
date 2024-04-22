@@ -134,7 +134,7 @@
             // 
             pictureBox1.Anchor = AnchorStyles.Bottom;
             pictureBox1.Image = Properties.Resources.Logo;
-            pictureBox1.Location = new Point(6, 546);
+            pictureBox1.Location = new Point(9, 546);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(149, 55);
@@ -344,7 +344,7 @@
             AccountList.Location = new Point(6, 56);
             AccountList.Margin = new Padding(3, 4, 3, 4);
             AccountList.Name = "AccountList";
-            AccountList.Size = new Size(217, 482);
+            AccountList.Size = new Size(221, 482);
             AccountList.TabIndex = 1;
             AccountList.SelectedIndexChanged += AccountList_SelectedIndexChanged;
             // 
@@ -353,7 +353,7 @@
             AccountSearcher.Anchor = AnchorStyles.Top;
             AccountSearcher.BorderStyle = BorderStyle.FixedSingle;
             AccountSearcher.CausesValidation = false;
-            AccountSearcher.Location = new Point(3, 21);
+            AccountSearcher.Location = new Point(5, 21);
             AccountSearcher.Margin = new Padding(3, 4, 3, 4);
             AccountSearcher.Name = "AccountSearcher";
             AccountSearcher.PlaceholderText = "Search..";
@@ -370,11 +370,11 @@
             AccountSelectGroup.Controls.Add(AddAccount);
             AccountSelectGroup.FlatStyle = FlatStyle.Flat;
             AccountSelectGroup.ForeColor = Color.Transparent;
-            AccountSelectGroup.Location = new Point(0, -9);
+            AccountSelectGroup.Location = new Point(-4, -9);
             AccountSelectGroup.Margin = new Padding(3, 4, 3, 4);
             AccountSelectGroup.Name = "AccountSelectGroup";
             AccountSelectGroup.Padding = new Padding(3, 4, 3, 4);
-            AccountSelectGroup.Size = new Size(229, 609);
+            AccountSelectGroup.Size = new Size(233, 609);
             AccountSelectGroup.TabIndex = 1;
             AccountSelectGroup.TabStop = false;
             // 
