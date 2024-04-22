@@ -55,7 +55,6 @@
             CustomerName = new Label();
             OnMicrosoftDomain = new TextBox();
             panel1 = new Panel();
-            UploadQR = new Button();
             SelectACustomer = new Panel();
             label4 = new Label();
             label8 = new Label();
@@ -65,6 +64,7 @@
             label7 = new Label();
             Phone = new TextBox();
             Crm = new Label();
+            UploadQR = new Button();
             pictureBox4 = new PictureBox();
             pictureBox3 = new PictureBox();
             pictureBox2 = new PictureBox();
@@ -134,10 +134,10 @@
             // 
             pictureBox1.Anchor = AnchorStyles.Bottom;
             pictureBox1.Image = Properties.Resources.Logo;
-            pictureBox1.Location = new Point(6, 528);
+            pictureBox1.Location = new Point(6, 546);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(138, 67);
+            pictureBox1.Size = new Size(149, 55);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
@@ -247,10 +247,10 @@
             Edit.FlatStyle = FlatStyle.Flat;
             Edit.ForeColor = Color.Transparent;
             Edit.Image = Properties.Resources.Settings;
-            Edit.Location = new Point(316, 2);
+            Edit.Location = new Point(301, 2);
             Edit.Margin = new Padding(3, 4, 3, 4);
             Edit.Name = "Edit";
-            Edit.Size = new Size(53, 57);
+            Edit.Size = new Size(69, 57);
             Edit.TabIndex = 8;
             Edit.UseMnemonic = false;
             Edit.UseVisualStyleBackColor = false;
@@ -344,7 +344,7 @@
             AccountList.Location = new Point(6, 56);
             AccountList.Margin = new Padding(3, 4, 3, 4);
             AccountList.Name = "AccountList";
-            AccountList.Size = new Size(217, 452);
+            AccountList.Size = new Size(217, 482);
             AccountList.TabIndex = 1;
             AccountList.SelectedIndexChanged += AccountList_SelectedIndexChanged;
             // 
@@ -359,7 +359,8 @@
             AccountSearcher.PlaceholderText = "Search..";
             AccountSearcher.Size = new Size(223, 23);
             AccountSearcher.TabIndex = 0;
-            AccountSearcher.KeyUp += Search;
+            AccountSearcher.TextChanged += Search;
+            AccountSearcher.KeyPress += Search;
             // 
             // AccountSelectGroup
             // 
@@ -367,11 +368,13 @@
             AccountSelectGroup.Controls.Add(AccountSearcher);
             AccountSelectGroup.Controls.Add(pictureBox1);
             AccountSelectGroup.Controls.Add(AddAccount);
-            AccountSelectGroup.Location = new Point(0, -4);
+            AccountSelectGroup.FlatStyle = FlatStyle.Flat;
+            AccountSelectGroup.ForeColor = Color.Transparent;
+            AccountSelectGroup.Location = new Point(0, -9);
             AccountSelectGroup.Margin = new Padding(3, 4, 3, 4);
             AccountSelectGroup.Name = "AccountSelectGroup";
             AccountSelectGroup.Padding = new Padding(3, 4, 3, 4);
-            AccountSelectGroup.Size = new Size(229, 603);
+            AccountSelectGroup.Size = new Size(229, 609);
             AccountSelectGroup.TabIndex = 1;
             AccountSelectGroup.TabStop = false;
             // 
@@ -385,7 +388,7 @@
             AddAccount.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
             AddAccount.FlatStyle = FlatStyle.Flat;
             AddAccount.ForeColor = Color.Transparent;
-            AddAccount.Location = new Point(161, 540);
+            AddAccount.Location = new Point(161, 545);
             AddAccount.Margin = new Padding(3, 4, 3, 4);
             AddAccount.Name = "AddAccount";
             AddAccount.Size = new Size(65, 55);
@@ -400,7 +403,7 @@
             CustomerName.Font = new Font("Roboto", 18F, FontStyle.Bold);
             CustomerName.Location = new Point(43, 2);
             CustomerName.Name = "CustomerName";
-            CustomerName.Size = new Size(264, 32);
+            CustomerName.Size = new Size(258, 32);
             CustomerName.TabIndex = 3;
             CustomerName.Text = "Select customer 11111111111";
             CustomerName.TextAlign = ContentAlignment.MiddleLeft;
@@ -452,29 +455,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(375, 585);
             panel1.TabIndex = 24;
-            // 
-            // UploadQR
-            // 
-            UploadQR.BackColor = Color.Transparent;
-            UploadQR.BackgroundImage = Properties.Resources.picture_front_gradient;
-            UploadQR.BackgroundImageLayout = ImageLayout.Zoom;
-            UploadQR.Enabled = false;
-            UploadQR.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
-            UploadQR.FlatAppearance.BorderSize = 0;
-            UploadQR.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            UploadQR.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
-            UploadQR.FlatStyle = FlatStyle.Flat;
-            UploadQR.ForeColor = Color.Transparent;
-            UploadQR.Image = Properties.Resources.Settings;
-            UploadQR.Location = new Point(218, 189);
-            UploadQR.Margin = new Padding(3, 4, 3, 4);
-            UploadQR.Name = "UploadQR";
-            UploadQR.Size = new Size(41, 35);
-            UploadQR.TabIndex = 51;
-            UploadQR.UseMnemonic = false;
-            UploadQR.UseVisualStyleBackColor = false;
-            UploadQR.Visible = false;
-            UploadQR.Click += UploadQR_Click;
             // 
             // SelectACustomer
             // 
@@ -566,6 +546,29 @@
             Crm.TextAlign = ContentAlignment.MiddleLeft;
             Crm.Click += Crm_Click;
             // 
+            // UploadQR
+            // 
+            UploadQR.BackColor = Color.Transparent;
+            UploadQR.BackgroundImage = Properties.Resources.picture_front_gradient;
+            UploadQR.BackgroundImageLayout = ImageLayout.Zoom;
+            UploadQR.Enabled = false;
+            UploadQR.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
+            UploadQR.FlatAppearance.BorderSize = 0;
+            UploadQR.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            UploadQR.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
+            UploadQR.FlatStyle = FlatStyle.Flat;
+            UploadQR.ForeColor = Color.Transparent;
+            UploadQR.Image = Properties.Resources.Settings;
+            UploadQR.Location = new Point(218, 189);
+            UploadQR.Margin = new Padding(3, 4, 3, 4);
+            UploadQR.Name = "UploadQR";
+            UploadQR.Size = new Size(41, 35);
+            UploadQR.TabIndex = 51;
+            UploadQR.UseMnemonic = false;
+            UploadQR.UseVisualStyleBackColor = false;
+            UploadQR.Visible = false;
+            UploadQR.Click += UploadQR_Click;
+            // 
             // AppDash
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -582,7 +585,7 @@
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "AppDash";
-            Text = "MiniCSP - Bezeq International";
+            Text = "MiniCSP ";
             Shown += AppDash_Shown;
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();

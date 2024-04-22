@@ -1,21 +1,13 @@
+/////////////////////////////////////
+////DevNoam (noamsapir.me) 2024  ////
+/////////////////////////////////////
+
 using _365.Core.Database;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Windows.Forms;
 
 namespace _365
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        /// 
-
-
-
-
         [STAThread]
         static void Main(string[] args)
         {

@@ -1,4 +1,11 @@
-﻿using Microsoft.Data.Sqlite;
+﻿/////////////////////////////////////
+////DevNoam (noamsapir.me) 2024  ////
+/////////////////////////////////////
+//// This function retrives     /////
+//// number of accounts to int //////
+/////////////////////////////////////
+
+using Microsoft.Data.Sqlite;
 
 namespace _365.Core.Database.Functions
 {
