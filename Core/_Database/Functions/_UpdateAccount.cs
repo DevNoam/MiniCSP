@@ -1,4 +1,9 @@
-﻿using _365.Core.Properties;
+﻿/////////////////////////////////////
+////DevNoam (noamsapir.me) 2024   ///
+/////////////////////////////////////
+//// This function updates      /////
+//// account fields, not CORE  //////
+/////////////////////////////////////
 using Microsoft.Data.Sqlite;
 
 namespace _365.Core.Database.Functions

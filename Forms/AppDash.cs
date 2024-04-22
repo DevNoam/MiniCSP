@@ -3,7 +3,6 @@ using _365.Core.Database;
 using _365.Core.Properties;
 using Sungaila.ImmersiveDarkMode.WinForms;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 
@@ -17,6 +16,7 @@ namespace _365
         private int selectedId = -1;
         private bool editMode = false;
         private string AppTitle;
+        private System.Windows.Forms.Timer? searchTimer;
 
         #region contextbutton
 
@@ -31,7 +31,9 @@ namespace _365
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern bool AppendMenu(IntPtr hMenu, int uFlags, int uIDNewItem, string lpNewItem);
 
-        private const int CustomMenuItemID = 1002;
+        private const int ChangeDBContextId = 1002;
+        private const int ExportToJsonContextId = 1003;
+        private const int ImportFromJsonContextId = 1004;
         protected override CreateParams CreateParams
         {
             get
@@ -50,7 +52,10 @@ namespace _365
             IntPtr systemMenuHandle = GetSystemMenu(this.Handle, false);
             if (systemMenuHandle != IntPtr.Zero)
             {
-                AppendMenu(systemMenuHandle, MF_STRING, CustomMenuItemID, "Set Database");
+                AppendMenu(systemMenuHandle, MF_STRING, ChangeDBContextId, "Set Database");
+                AppendMenu(systemMenuHandle, MF_SEPARATOR, 0, string.Empty);
+                AppendMenu(systemMenuHandle, MF_STRING, ExportToJsonContextId, "Export to json");
+                AppendMenu(systemMenuHandle, MF_STRING, ImportFromJsonContextId, "Import from json");
             }
         }
         protected override void WndProc(ref Message m)
@@ -62,9 +67,21 @@ namespace _365
             if (m.Msg == 0x0112) // WM_SYSCOMMAND
             {
                 int menuID = m.WParam.ToInt32();
-                if (menuID == CustomMenuItemID)
+                if (menuID == ChangeDBContextId)
                 {
                     DatabaseManager.ReplaceDatabase();
+                }
+                if (menuID == ExportToJsonContextId)
+                {
+                    ExportToJSON ExportInstance = new ExportToJSON();
+                    ExportInstance.Export();
+                }
+                if (menuID == ImportFromJsonContextId)
+                {
+                    this.Text = AppTitle + " Importing..";
+                    ImportFromJson importInstance = new ImportFromJson();
+                    importInstance.ImportJson();
+                    FetchAll();
                 }
             }
         }
@@ -74,6 +91,9 @@ namespace _365
             InitializeComponent();
             AppTitle = this.Text;
             this.SetTitlebarTheme();
+            searchTimer = new System.Windows.Forms.Timer();
+            searchTimer.Interval = 650; // Set delay time to 500 milliseconds
+            searchTimer.Tick += SearchTimer_Tick;
         }
         private void AppDash_Shown(object sender, EventArgs e)
         {
@@ -90,10 +110,10 @@ namespace _365
                 countdownTimer = null;
             }
             // Check if an item is selected
+            AccountListEntry buttonId = (AccountListEntry)AccountList.SelectedItem;
             if (AccountList.SelectedIndex != -1)
             {
                 // Get the selected button ID
-                AccountListEntry buttonId = (AccountListEntry)AccountList.SelectedItem;
                 AccountProp account = DatabaseManager.FetchAccount(buttonId.id);
                 if (account != null)
                 {
@@ -109,7 +129,7 @@ namespace _365
                     Email.Text = account.email;
                     Password.Text = account.password;
                     mfaToken = account.mfaToken;
-                    OnMicrosoftDomain.Text = account.domainMicrosoft;
+                    OnMicrosoftDomain.Text = account.domain;
                     Phone.Text = account.phone;
                     Notes.Text = account.notes;
                     isArchived.Checked = (account.isArchived == 1) ? true : false;
@@ -119,6 +139,11 @@ namespace _365
 
                     TokenGenerator(mfaToken);
                 }
+            }
+            else if (AccountList.SelectedIndex < 0)
+            {
+                SelectACustomer.Visible = true;
+                SelectACustomer.Enabled = true;
             }
         }
 
@@ -176,22 +201,58 @@ namespace _365
                 }
             }
         }
-        private void Search(object sender, KeyEventArgs e)
+
+        //private void Search(object sender, KeyEventArgs e)
+        //{
+        //    e.SuppressKeyPress = true;
+        //    searchTimer.Stop();
+        //    searchTimer.Start();
+        //}
+        private void Search(object sender, EventArgs e)
         {
-            string search = AccountSearcher.Text;
-            e.SuppressKeyPress = true;
-            if (!string.IsNullOrEmpty(search))
+            searchTimer.Stop();
+            searchTimer.Start();
+        }
+        private async void SearchTimer_Tick(object sender, EventArgs e)
+        {
+            // Stop the timer
+            searchTimer.Stop();
+            // Perform the search operation after the delay
+            await SearchAsync(AccountSearcher.Text);
+        }
+
+
+        private async Task SearchAsync(string searchText)
+        {
+            if (!string.IsNullOrEmpty(searchText))
             {
-                AccountListEntry[] results = DatabaseManager.SearchEntries(search);
-                if (results.Length > 0)
+                AccountListEntry[] accounts = DatabaseManager.SearchEntries(searchText);
+                List<AccountListEntry> archivedEntries = new List<AccountListEntry>();
+                if (accounts.Length > 0)
                 {
                     AccountList.Items.Clear();
-                    foreach (var result in results)
-                        AccountList.Items.Add(result);
+                    foreach (var account in accounts)
+                    {
+                        if (account.isArchived == true)
+                        {
+                            archivedEntries.Add(account);
+                            continue;
+                        }
+                        AccountList.Items.Add(account);
+                    }
+                    //Create Archive section
+                    if (archivedEntries.Count() > 0)
+                    {
+                        AccountList.Items.Add(new AccountListEntry { customerName = "---- Archives ----", id = -1 });
+                        foreach (var account in archivedEntries)
+                        {
+                            AccountList.Items.Add(account);
+                        }
+                    }
                 }
                 UpdateEntriesNumber();
             }
-            else if (string.IsNullOrEmpty(search))
+            else if (string.IsNullOrEmpty(searchText))
             {
                 if (DatabaseManager.GetAccountsCount() == AccountList.Items.Count)
                     return;
@@ -201,24 +262,55 @@ namespace _365
                 }
             }
         }
+
+
         private void FetchAll(int selectId = -1)
         {
             AccountList.Items.Clear();
             AccountListEntry[] accounts = DatabaseManager.FetchAllEntries();
-            // Add buttons to the ListBox
+            List<AccountListEntry> archivedEntries = new List<AccountListEntry>();
 
             foreach (var account in accounts)
             {
-                AccountList.Items.Add(account);
-                if (selectedId != -1 && account.id == selectId)
-                    AccountList.SelectedItem = account;
+                if (account.isArchived == true)
+                {
+                    archivedEntries.Add(account);
+                }
+                else
+                {
+                    AccountList.Items.Add(account);
+                    SelectEntry(selectId, account);
+                }
             }
+            if (archivedEntries.Count() > 0)
+            {
+                AccountList.Items.Add(new AccountListEntry { customerName = "---- Archives ----", id = -1 });
+                foreach (var account in archivedEntries)
+                {
+                    AccountList.Items.Add(account);
+                    SelectEntry(selectId, account);
+                }
+
+            }
+
+            void SelectEntry(int selectId, AccountListEntry item)
+            {
+                if (selectedId != -1 && item.id == selectId)
+                    AccountList.SelectedItem = item;
+            }
+
+
             UpdateEntriesNumber();
         }
         private void Crm_Click(object sender, EventArgs e)
         {
-            if (Crm.Text.Length > 5)
-                Clipboard.SetText(Crm.Text.Remove(0, 5));
+            if (editMode == false)
+            {
+                if (Crm.Text.Length > 5)
+                    Clipboard.SetText(Crm.Text.Remove(0, 5));
+            }
+            else if (editMode == true)
+                EditCoreAccount();
         }
         private void CopyPassword(object sender, EventArgs e)
         {
@@ -247,7 +339,34 @@ namespace _365
                     Clipboard.SetText(MFA.Text);
             }
         }
-        private void CustomerName_Click(object sender, EventArgs e) => Clipboard.SetText(CustomerName.Text);
+        private void CustomerName_Click(object sender, EventArgs e)
+        {
+
+            if (editMode == false)
+                Clipboard.SetText(CustomerName.Text);
+            else if (editMode == true)
+                EditCoreAccount();
+
+        }
+
+        private void EditCoreAccount()
+        {
+            CreateEntry editEntry = new CreateEntry();
+            NewEntry entry = new NewEntry() { customerName = CustomerName.Text, crmNumber = Crm.Text.Remove(0, 5) };
+            editEntry.InitEditMode(selectedId, entry);
+            editEntry.ShowDialog();
+
+            if (editEntry.accEntry != null)
+            {
+                if (editEntry.accEntry.crmNumber != Crm.Text)
+                    Crm.Text = "CRM: " + editEntry.accEntry.crmNumber;
+                if (editEntry.accEntry.customerName != CustomerName.Text)
+                    CustomerName.Text = editEntry.accEntry.customerName;
+
+                ModifiedDate.Text = DateTime.Now.ToString();
+            }
+        }
+
 
         private void PasswordFieldDisableKey(object sender, KeyPressEventArgs e)
         {
@@ -279,7 +398,7 @@ namespace _365
                 EditAccount.oldAccountProp = new AccountProp //Move current props to EditAccount
                 {
                     id = selectedId,
-                    domainMicrosoft = OnMicrosoftDomain.Text,
+                    domain = OnMicrosoftDomain.Text,
                     email = Email.Text,
                     isArchived = Convert.ToInt32(isArchived.Checked),
                     mfaToken = mfaToken,
@@ -297,7 +416,7 @@ namespace _365
                 AccountProp newAccountProp = new AccountProp
                 {
                     id = selectedId,
-                    domainMicrosoft = OnMicrosoftDomain.Text,
+                    domain = OnMicrosoftDomain.Text,
                     email = Email.Text,
                     isArchived = Convert.ToInt32(isArchived.Checked),
                     mfaToken = MFA.Text,
@@ -307,7 +426,7 @@ namespace _365
                     modifyDate = DateTime.Now
                 };
 
-                if (newAccountProp.domainMicrosoft == EditAccount.oldAccountProp.domainMicrosoft && newAccountProp.email == EditAccount.oldAccountProp.email &&
+                if (newAccountProp.domain == EditAccount.oldAccountProp.domain && newAccountProp.email == EditAccount.oldAccountProp.email &&
                     newAccountProp.isArchived == EditAccount.oldAccountProp.isArchived && newAccountProp.phone == EditAccount.oldAccountProp.phone &&
                     newAccountProp.password == EditAccount.oldAccountProp.password && newAccountProp.notes == EditAccount.oldAccountProp.notes && newAccountProp.mfaToken == EditAccount.oldAccountProp.mfaToken)
                 {
@@ -321,11 +440,14 @@ namespace _365
                 {
                     if (EditAccount.PublishEdit(newAccountProp) == true)
                     {
+
                         //Published
-                        mfaToken = newAccountProp.mfaToken;
                         ChangeEditState(false);
-                        ModifiedDate.Text = "Last modified: " + newAccountProp.modifyDate;
                         EditAccount = null;
+                        FetchAll(newAccountProp.id);
+
+                        //mfaToken = newAccountProp.mfaToken;
+                        //ModifiedDate.Text = "Last modified: " + newAccountProp.modifyDate;
                     }
                     else
                     {
@@ -341,7 +463,7 @@ namespace _365
 
             void CancelPuslish()
             {
-                OnMicrosoftDomain.Text = EditAccount.oldAccountProp.domainMicrosoft;
+                OnMicrosoftDomain.Text = EditAccount.oldAccountProp.domain;
                 Email.Text = EditAccount.oldAccountProp.email;
                 isArchived.Checked = (EditAccount.oldAccountProp.isArchived == 1) ? true : false;
                 Phone.Text = EditAccount.oldAccountProp.phone;
@@ -415,7 +537,9 @@ namespace _365
             CreateEntry entryForm = new CreateEntry();
             entryForm.ShowDialog();
             if (entryForm.accEntry != null)
-                FetchAll(entryForm.accEntry.id);
+            {
+                FetchAll(entryForm.accEntry.Id);
+            }
         }
 
         private void UploadQR_Click(object sender, EventArgs e)
@@ -423,9 +547,14 @@ namespace _365
             ExtractQR extractQR = new ExtractQR();
             QRTotp TOTP = extractQR.GetTOTP();
 
+            if (TOTP.secret == "error")
+            {
+                MessageBox.Show("Reading QR failed", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (!string.IsNullOrEmpty(TOTP.secret))
             {
-                if (Email.Text.Contains(TOTP.mail))
+                if (TOTP.mail != null && Email.Text.Contains(TOTP.mail))
                 {
                     //Do nothing, thats okay.
                 }
@@ -438,11 +567,6 @@ namespace _365
                 }
 
                 MFA.Text = TOTP.secret;
-            }
-            else if (TOTP.secret == "error")
-            { 
-                MessageBox.Show("Reading QR failed", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
         }
     }

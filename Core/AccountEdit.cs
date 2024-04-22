@@ -1,14 +1,5 @@
 ﻿using _365.Core.Database;
 using _365.Core.Properties;
-using Microsoft.Data.Sqlite;
-using Microsoft.VisualBasic.ApplicationServices;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace _365.Core
 {
@@ -35,10 +26,6 @@ namespace _365.Core
             if (newAccountProp.mfaToken != oldAccountProp.mfaToken)
             {
                 changedProps["MFA"] = newAccountProp.mfaToken;
-            }
-            if (newAccountProp.domainMicrosoft != oldAccountProp.domainMicrosoft)
-            {
-                changedProps["DomainMicrosoft"] = newAccountProp.domainMicrosoft;
             }
             if (newAccountProp.phone != oldAccountProp.phone)
             {
