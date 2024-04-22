@@ -1,4 +1,10 @@
-﻿using _365.Core.Properties;
+﻿/////////////////////////////////////
+////DevNoam (noamsapir.me) 2024  ////
+/////////////////////////////////////
+//// This function fetches     //////
+////  specific account         //////
+/////////////////////////////////////
+using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
 using System.Data;
 
@@ -37,7 +43,6 @@ namespace _365.Core.Database.Functions
                                 id = id,
                                 customerName = reader.IsDBNull(reader.GetOrdinal("CustomerName")) ? null : reader.GetString(reader.GetOrdinal("CustomerName")),
                                 domain = reader.IsDBNull(reader.GetOrdinal("Domain")) ? null : reader.GetString(reader.GetOrdinal("Domain")),
-                                domainMicrosoft = reader.IsDBNull(reader.GetOrdinal("domainMicrosoft")) ? null : reader.GetString(reader.GetOrdinal("domainMicrosoft")),
                                 email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
                                 password = reader.IsDBNull(reader.GetOrdinal("Password")) ? null : reader.GetString(reader.GetOrdinal("Password")),
                                 mfaToken = reader.IsDBNull(reader.GetOrdinal("MFA")) ? null : reader.GetString(reader.GetOrdinal("MFA")),
