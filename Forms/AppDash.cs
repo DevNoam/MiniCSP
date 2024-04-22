@@ -80,7 +80,7 @@ namespace _365
                 {
                     this.Text = AppTitle + " Importing..";
                     ImportFromJson importInstance = new ImportFromJson();
-                    importInstance.ImportJson();
+                    importInstance.ImportJson(AccountList.Items.Count);
                     FetchAll();
                 }
             }
@@ -376,8 +376,7 @@ namespace _365
 
         private void RevealPassword(object sender, EventArgs e)
         {
-            if (!editMode)
-                Password.PasswordChar = '\0';
+            Password.PasswordChar = '\0';
         }
         private void HidePassword(object sender, EventArgs e)
         {
@@ -484,7 +483,6 @@ namespace _365
                     AccountSearcher.Enabled = false;
                     AddAccount.Enabled = false;
                     Email.ReadOnly = false;
-                    RevealPassword(sender, e);
                     Password.ReadOnly = false;
                     MFA.ReadOnly = false;
                     MFA.Enabled = true;
@@ -497,6 +495,7 @@ namespace _365
                     UploadQR.Visible = true;
                     UploadQR.Enabled = true;
                     editMode = true;
+                    RevealPassword(sender, e);
                     Edit.BackgroundImage = Properties.Resources.Save;
                 }
                 else if (edit is false)
@@ -506,7 +505,6 @@ namespace _365
                     AddAccount.Enabled = true;
                     Email.ReadOnly = true;
                     Password.ReadOnly = true;
-                    HidePassword(sender, e);
                     MFA.ReadOnly = true;
                     OnMicrosoftDomain.ReadOnly = true;
                     Phone.ReadOnly = true;
@@ -516,6 +514,7 @@ namespace _365
                     UploadQR.Visible = false;
                     UploadQR.Enabled = false;
                     editMode = false;
+                    HidePassword(sender, e);
                     Edit.BackgroundImage = Properties.Resources.Settings;
 
                     TokenGenerator(mfaToken);

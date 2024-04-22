@@ -50,8 +50,15 @@ namespace _365.Core
             string credits2 = $"Export date: {DateTime.Now}.";
             string creditsFinal = credits1 + "\r" + credits2;
             finalJson = creditsFinal + "\r" + finalJson;
-
-            File.WriteAllText(filePath, finalJson);
+            try
+            {
+                File.WriteAllText(filePath, finalJson);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Generic error, check for read permissions and try again.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                return;
+            }
             MessageBox.Show("Done, exported: " + entriesNum + " Entries.", Application.ProductName);
             return;
         }
