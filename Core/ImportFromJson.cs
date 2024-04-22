@@ -7,7 +7,7 @@ namespace _365.Core
 {
     public class ImportFromJson
     {
-        public void ImportJson()
+        public void ImportJson(int existedEntries)
         {
             //DB PASSWORD
             //string userPassIn = "password";
@@ -40,8 +40,20 @@ namespace _365.Core
 
 
             //Backup the DB.
-            if(accounts.Count > 0)
-                File.Copy(filePath, Path.Combine(databaseLocation, "backup", DateTime.Now.ToString("dd.MM.yyyy HH.mm") + "_" + _InitializeDatabase.dbName));
+            if (existedEntries > 0)
+            {
+                DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(databaseLocation, "backup"));
+                string dbToCopy = Path.Combine(databaseLocation, _InitializeDatabase.dbName);
+                try
+                {
+                    File.Copy(dbToCopy, Path.Combine(dir.FullName, DateTime.Now.ToString("dd.MM.yyyy HH.mm") + "_" + _InitializeDatabase.dbName));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Generic error, check for read permissions and try again.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                    return;
+                }
+            }
 
 
             List<NewEntry> importFailed = new List<NewEntry>();
@@ -92,7 +104,7 @@ namespace _365.Core
                 string finalJson = JsonSerializer.Serialize(jsonElement, options);
                 File.WriteAllText(filePathOfFailed, finalJson);
             }
-            MessageBox.Show("Finished exporting, exported: " + importedSuccess + " / " + accounts.Count() + " Filed: " + importFailed.Count(), Application.ProductName);
+            MessageBox.Show("Finished imprting, imported: " + importedSuccess + " / " + accounts.Count() + " Filed: " + importFailed.Count(), Application.ProductName);
         }
     }
 }
