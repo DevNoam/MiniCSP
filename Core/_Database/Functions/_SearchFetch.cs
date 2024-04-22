@@ -1,5 +1,13 @@
-﻿using _365.Core.Properties;
+﻿/////////////////////////////////////
+////DevNoam (noamsapir.me) 2024  ////
+/////////////////////////////////////
+//// This function retrives     /////
+//// accounts based on search  //////
+/////////////////////////////////////
+using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
+using System.Net.Http;
+using System.Web;
 
 namespace _365.Core.Database.Functions
 {
@@ -8,9 +16,10 @@ namespace _365.Core.Database.Functions
 
         internal static AccountListEntry[] SearchFetch(string search)
         {
+            search = HttpUtility.HtmlEncode(search);
             List<AccountListEntry> Accounts = new List<AccountListEntry>();
             // SQL query to retrieve customer entries
-            string query = $"SELECT * FROM Account WHERE `CustomerName` LIKE '%{search}%' OR `Domain` LIKE '%{search}%' OR `DomainMicrosoft` LIKE '%{search}%' OR `Email` LIKE '%{search}%' OR `CRM` LIKE '%{search}%' OR `Phone` LIKE '%{search}%'";
+            string query = $"SELECT * FROM Account WHERE `CustomerName` LIKE '%{search}%' OR `Domain` LIKE '%{search}%' OR `Email` LIKE '%{search}%' OR `CRM` LIKE '%{search}%' OR `Phone` LIKE '%{search}%'";
 
             // Open connection to the database
             using (SqliteConnection connection = new SqliteConnection(DatabaseManager.connectionString))
@@ -27,8 +36,10 @@ namespace _365.Core.Database.Functions
                         {
                             var id = reader.GetInt32(0);
                             var customerName = reader.GetString(1);
+                            var isArchivedVar = reader.IsDBNull(reader.GetOrdinal("isArchived")) ? 0 : reader.GetInt32(reader.GetOrdinal("isArchived"));
+                            bool isArchived = isArchivedVar == 1 ? true : false;
 
-                            Accounts.Add(new AccountListEntry { id = id, customerName = customerName });
+                            Accounts.Add(new AccountListEntry { id = id, customerName = customerName, isArchived = isArchived });
                         }
                     }
                 }

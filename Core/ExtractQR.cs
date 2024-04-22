@@ -3,7 +3,6 @@ using System;
 using ZXing;
 
 
-
 namespace _365.Core
 {
     internal class ExtractQR
