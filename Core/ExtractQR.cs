@@ -1,5 +1,4 @@
 ﻿using _365.Core.Properties;
-using System;
 using ZXing;
 
 

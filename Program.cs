@@ -16,13 +16,13 @@ namespace _365
             //DB Init
             if (DatabaseManager.Init())
             {
+                //Success
             }
             else
             {
                 MessageBox.Show("No connection to the Database", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //try again?
-                
-                System.Environment.Exit(0);
+                Environment.Exit(0);
+                return;
             }
             Application.Run(new AppDash());
         }
