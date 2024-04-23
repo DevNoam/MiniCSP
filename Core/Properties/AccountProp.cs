@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic.Logging;
-
-namespace _365.Core.Properties
+﻿namespace _365.Core.Properties
 {
     public class AccountProp
     {
