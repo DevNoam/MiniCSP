@@ -74,9 +74,9 @@
             label2.ForeColor = SystemColors.Control;
             label2.Location = new Point(32, 49);
             label2.Name = "label2";
-            label2.Size = new Size(129, 15);
+            label2.Size = new Size(137, 15);
             label2.TabIndex = 2;
-            label2.Text = "* CRM Customer name";
+            label2.Text = "* Customer name (CRM)";
             // 
             // label3
             // 
