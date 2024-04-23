@@ -6,7 +6,6 @@
 /////////////////////////////////////
 using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
-using System.Net.Http;
 using System.Web;
 
 namespace _365.Core.Database.Functions

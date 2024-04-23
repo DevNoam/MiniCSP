@@ -5,8 +5,6 @@
 //// core account edit of the ///////
 //// CRM and CustomerNumber  ////////
 /////////////////////////////////////
-
-
 using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
 using System.Web;
