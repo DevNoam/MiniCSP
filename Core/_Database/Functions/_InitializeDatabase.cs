@@ -8,11 +8,13 @@ using _365.Core.Database;
 using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
 using Microsoft.Win32;
+using System.Security.Cryptography;
+using System.Text;
 
 public static class _InitializeDatabase
 {
     public const string dbName = "365DB.db";
-    private const string dbEncryptKey = "BezeqNezeq!";
+    private const string EncryptionKey = "Bezeq0Nezeq!";
     private static readonly string registryLocation = $@"Software\DevNoam\{Application.ProductName}";
     public static bool Initialize(bool checkConnectionAndPassword = false, string password = "")
     {
@@ -22,11 +24,10 @@ public static class _InitializeDatabase
 
         if (checkConnectionAndPassword)
         {
-            registryProp.password = RegistryDecryption(password);
+            registryProp.password = password;
         }
         else
         {
-            registryProp.password = RegistryDecryption(registryProp.password);
             DatabaseManager.connectionString = $"Data Source={registryProp.path};password={registryProp.password}";
         }
 
@@ -126,7 +127,7 @@ public static class _InitializeDatabase
         registryProp.path = pathObject?.ToString() ?? string.Empty;
         registryProp.password = passObject?.ToString() ?? string.Empty;
         if (!string.IsNullOrWhiteSpace(registryProp.password))
-            registryProp.password = RegistryDecryption(registryProp.password);
+            registryProp.password = RegistryDecrypt(registryProp.password);
 
         if (!string.IsNullOrEmpty(registryProp.path) && File.Exists(registryProp.path))
         {
@@ -174,7 +175,7 @@ public static class _InitializeDatabase
                         SetDatabaseLocation(true);
                         return null;
                     }
-                    value.password = RegistryEncryption(value.password);
+                    value.password = RegistryEncrypt(value.password);
                 }
 
                 SetRegistry("password", value.password);
@@ -190,7 +191,7 @@ public static class _InitializeDatabase
                 value.password = SimplePasswordField.NewDatabasePassword();
                 value.path = Path.Combine(path, dbName);
                 SetRegistry("path", value.path);
-                SetRegistry("password", RegistryEncryption(value.password));
+                SetRegistry("password", RegistryEncrypt(value.password));
                 return value;
             }
             else
@@ -236,32 +237,39 @@ public static class _InitializeDatabase
     }
 
 
-
-    public static string RegistryEncryption(string key)
+    public static string RegistryEncrypt(string plainText)
     {
-        char[] inputChars = key.ToCharArray();
-        char[] keyChars = dbEncryptKey.ToCharArray();
-        char[] encryptedChars = new char[inputChars.Length];
+        // Convert the plaintext string to a byte array
+        byte[] plainBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
 
-        for (int i = 0; i < inputChars.Length; i++)
+        // Convert the encryption key string to a byte array
+        byte[] keyBytes = System.Text.Encoding.UTF8.GetBytes(EncryptionKey);
+
+        // Encrypt the plaintext byte array using XOR
+        for (int i = 0; i < plainBytes.Length; i++)
         {
-            encryptedChars[i] = (char)(inputChars[i] ^ keyChars[i % keyChars.Length]);
+            plainBytes[i] = (byte)(plainBytes[i] ^ keyBytes[i % keyBytes.Length]);
         }
 
-        return new string(encryptedChars);
+        // Convert the encrypted byte array back to a string
+        return Convert.ToBase64String(plainBytes);
     }
 
-    public static string RegistryDecryption(string key)
+    public static string RegistryDecrypt(string cipherText)
     {
-        char[] inputChars = key.ToCharArray();
-        char[] keyChars = dbEncryptKey.ToCharArray();
-        char[] decryptedChars = new char[inputChars.Length];
+        // Convert the Base64-encoded ciphertext string to a byte array
+        byte[] cipherBytes = Convert.FromBase64String(cipherText);
 
-        for (int i = 0; i < inputChars.Length; i++)
+        // Convert the encryption key string to a byte array
+        byte[] keyBytes = System.Text.Encoding.UTF8.GetBytes(EncryptionKey);
+
+        // Decrypt the ciphertext byte array using XOR
+        for (int i = 0; i < cipherBytes.Length; i++)
         {
-            decryptedChars[i] = (char)(inputChars[i] ^ keyChars[i % keyChars.Length]);
+            cipherBytes[i] = (byte)(cipherBytes[i] ^ keyBytes[i % keyBytes.Length]);
         }
 
-        return new string(decryptedChars);
+        // Convert the decrypted byte array back to a string
+        return System.Text.Encoding.UTF8.GetString(cipherBytes);
     }
 }
