@@ -2,7 +2,10 @@
 using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
 using Sungaila.ImmersiveDarkMode.WinForms;
+using System.Linq;
+using System.Windows.Forms;
 using ZXing;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace _365
@@ -39,6 +42,11 @@ namespace _365
             if (string.IsNullOrWhiteSpace(CRMCustomerName.Text) || string.IsNullOrWhiteSpace(CRMNumber.Text))
             {
                 MessageBox.Show("Cannot leave blank fields", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(CRMNumber.Text, "^[0-9]*$"))
+            {
+                MessageBox.Show("CRM number cannot contain letters.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 

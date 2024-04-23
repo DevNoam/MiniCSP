@@ -1,5 +1,4 @@
 ﻿using _365.Core.Database;
-using _365.Core.Database.Functions;
 using _365.Core.Properties;
 using System.Text.Json;
 
@@ -7,24 +6,30 @@ namespace _365.Core
 {
     public class ImportFromJson
     {
-        public void ImportJson()
+        public bool ImportJson(int existedEntries)
         {
             //DB PASSWORD
-            //string userPassIn = "password";
-            //if (!DatabaseManager.Init(userPassIn))
-            //return;
+            if (!DatabaseManager.Init(true))
+            {
+                string userPassIn = SimplePasswordField.RequestPassword();
+                if (!DatabaseManager.Init(true, userPassIn))
+                {
+                    MessageBox.Show("Password incorrect", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
 
 
-            var option = MessageBox.Show("Importing won't override existing entries but rather create new entries. Place 'import.json' file to the DB folder.", Application.ProductName, MessageBoxButtons.OKCancel);
+            var option = MessageBox.Show("Importing won't override existing entries but rather create new entries. Place 'import.json' file to the DB folder.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             if (option == DialogResult.Cancel)
-                return;
+                return false;
 
-            string databaseLocation = Path.GetDirectoryName(_InitializeDatabase.GetDatabaseLocation());
+            string databaseLocation = Path.GetDirectoryName(_InitializeDatabase.GetDatabaseLocation().path);
             string filePath = Path.Combine(databaseLocation, "import.json");
             if (!Path.Exists(filePath))
             { 
-                MessageBox.Show("import.json file not present", Application.ProductName, MessageBoxButtons.OK);
-                return;
+                MessageBox.Show("import.json file not present", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
             string jsonFile = File.ReadAllText(filePath);
 
@@ -40,8 +45,20 @@ namespace _365.Core
 
 
             //Backup the DB.
-            if(accounts.Count > 0)
-                File.Copy(filePath, Path.Combine(databaseLocation, "backup", DateTime.Now.ToString("dd.MM.yyyy HH.mm") + "_" + _InitializeDatabase.dbName));
+            if (existedEntries > 0)
+            {
+                DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(databaseLocation, "Backup"));
+                string dbToCopy = Path.Combine(databaseLocation, _InitializeDatabase.dbName);
+                try
+                {
+                    File.Copy(dbToCopy, Path.Combine(dir.FullName, DateTime.Now.ToString("dd.MM.yyyy HH.mm") + "_" + _InitializeDatabase.dbName));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Generic error, check for read permissions and try again.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                    return false;
+                }
+            }
 
 
             List<NewEntry> importFailed = new List<NewEntry>();
@@ -88,11 +105,12 @@ namespace _365.Core
             var jsonElement = JsonSerializer.Deserialize<JsonElement>(json);
             if (importFailed.Count > 0)
             { 
-                string filePathOfFailed = Path.Combine(Path.GetDirectoryName(_InitializeDatabase.GetDatabaseLocation()), "failed.json");
+                string filePathOfFailed = Path.Combine(Path.GetDirectoryName(_InitializeDatabase.GetDatabaseLocation().path), "failed.json");
                 string finalJson = JsonSerializer.Serialize(jsonElement, options);
                 File.WriteAllText(filePathOfFailed, finalJson);
             }
-            MessageBox.Show("Finished exporting, exported: " + importedSuccess + " / " + accounts.Count() + " Filed: " + importFailed.Count(), Application.ProductName);
+            MessageBox.Show("Finished imprting, imported: " + importedSuccess + " / " + accounts.Count() + " Filed: " + importFailed.Count(), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return true;
         }
     }
 }

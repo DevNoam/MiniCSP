@@ -1,4 +1,7 @@
-﻿using _365.Core.Database.Functions;
+﻿/////////////////////////////////////
+////DevNoam (noamsapir.me) 2024  ////
+/////////////////////////////////////
+using _365.Core.Database.Functions;
 using _365.Core.Properties;
 
 namespace _365.Core.Database
@@ -7,7 +10,7 @@ namespace _365.Core.Database
     {
         public static string connectionString;
 
-        public static bool Init(string password = "") => _InitializeDatabase.Init(password);
+        public static bool Init(bool checkConnectionAnnPass = false, string password = "") => _InitializeDatabase.Initialize(checkConnectionAnnPass, password);
         public static void ReplaceDatabase() => _InitializeDatabase.ReplaceDatabaseLocation();
         public static AccountListEntry[] SearchEntries(string search) => _SearchFetch.SearchFetch(search);
         public static int GetAccountsCount() => _GetAccountCount.GetAccountCount();

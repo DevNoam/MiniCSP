@@ -34,6 +34,7 @@ namespace _365
         private const int ChangeDBContextId = 1002;
         private const int ExportToJsonContextId = 1003;
         private const int ImportFromJsonContextId = 1004;
+        private const int DeveloperInfoContextId = 1005;
         protected override CreateParams CreateParams
         {
             get
@@ -56,6 +57,8 @@ namespace _365
                 AppendMenu(systemMenuHandle, MF_SEPARATOR, 0, string.Empty);
                 AppendMenu(systemMenuHandle, MF_STRING, ExportToJsonContextId, "Export to json");
                 AppendMenu(systemMenuHandle, MF_STRING, ImportFromJsonContextId, "Import from json");
+                AppendMenu(systemMenuHandle, MF_SEPARATOR, 0, string.Empty);
+                AppendMenu(systemMenuHandle, MF_STRING, DeveloperInfoContextId, "About & Developer Info");
             }
         }
         protected override void WndProc(ref Message m)
@@ -80,9 +83,14 @@ namespace _365
                 {
                     this.Text = AppTitle + " Importing..";
                     ImportFromJson importInstance = new ImportFromJson();
-                    importInstance.ImportJson();
+                    importInstance.ImportJson(AccountList.Items.Count);
                     FetchAll();
                 }
+                if (menuID == DeveloperInfoContextId)
+                { 
+                    MessageBox.Show($"MiniCSP {Application.ProductVersion} is an app developed by DevNoam (Noam Sapir) for Bezeq International. Report bugs to: contact@noamsapir.me", "Developer and app info");
+                }
+
             }
         }
         #endregion
@@ -92,7 +100,7 @@ namespace _365
             AppTitle = this.Text;
             this.SetTitlebarTheme();
             searchTimer = new System.Windows.Forms.Timer();
-            searchTimer.Interval = 650; // Set delay time to 500 milliseconds
+            searchTimer.Interval = 450; // Set delay time to 500 milliseconds
             searchTimer.Tick += SearchTimer_Tick;
         }
         private void AppDash_Shown(object sender, EventArgs e)
@@ -202,12 +210,6 @@ namespace _365
             }
         }
 
-        //private void Search(object sender, KeyEventArgs e)
-        //{
-        //    e.SuppressKeyPress = true;
-        //    searchTimer.Stop();
-        //    searchTimer.Start();
-        //}
         private void Search(object sender, EventArgs e)
         {
             searchTimer.Stop();
@@ -376,8 +378,7 @@ namespace _365
 
         private void RevealPassword(object sender, EventArgs e)
         {
-            if (!editMode)
-                Password.PasswordChar = '\0';
+            Password.PasswordChar = '\0';
         }
         private void HidePassword(object sender, EventArgs e)
         {
@@ -484,7 +485,6 @@ namespace _365
                     AccountSearcher.Enabled = false;
                     AddAccount.Enabled = false;
                     Email.ReadOnly = false;
-                    RevealPassword(sender, e);
                     Password.ReadOnly = false;
                     MFA.ReadOnly = false;
                     MFA.Enabled = true;
@@ -497,6 +497,7 @@ namespace _365
                     UploadQR.Visible = true;
                     UploadQR.Enabled = true;
                     editMode = true;
+                    RevealPassword(sender, e);
                     Edit.BackgroundImage = Properties.Resources.Save;
                 }
                 else if (edit is false)
@@ -506,7 +507,6 @@ namespace _365
                     AddAccount.Enabled = true;
                     Email.ReadOnly = true;
                     Password.ReadOnly = true;
-                    HidePassword(sender, e);
                     MFA.ReadOnly = true;
                     OnMicrosoftDomain.ReadOnly = true;
                     Phone.ReadOnly = true;
@@ -516,6 +516,7 @@ namespace _365
                     UploadQR.Visible = false;
                     UploadQR.Enabled = false;
                     editMode = false;
+                    HidePassword(sender, e);
                     Edit.BackgroundImage = Properties.Resources.Settings;
 
                     TokenGenerator(mfaToken);
