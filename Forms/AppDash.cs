@@ -88,7 +88,7 @@ namespace _365
                 }
                 if (menuID == DeveloperInfoContextId)
                 { 
-                    MessageBox.Show($"MiniCSP {Application.ProductVersion} is an app developed by DevNoam (Noam Sapir) for Bezeq International. Report bugs to: contact@noamsapir.me", "Developer and app info");
+                    MessageBox.Show($"MiniCSP is an app developed by DevNoam (Noam Sapir) for Bezeq International. Report bugs to: contact@noamsapir.me", "Developer and app info");
                 }
 
             }
