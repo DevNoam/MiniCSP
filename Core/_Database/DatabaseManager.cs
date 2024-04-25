@@ -19,5 +19,6 @@ namespace _365.Core.Database
         public static bool UpdateAccount(int id, Dictionary<string, object> changedProps, string logToAdd = null) => _UpdateAccount.Update(id, changedProps, logToAdd);
         public static int CreateAccount(NewEntry entry) => _CreateAccount.Create(entry);
         public static bool EditCoreAccount(int id, NewEntry changedProps) => _EditCoreAccount.UpdateAccount(id, changedProps);
+        public static bool DeleteAccount(int id) => _DeleteAccount.Delete(id);
     }
 }

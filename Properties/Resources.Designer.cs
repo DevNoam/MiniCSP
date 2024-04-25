@@ -113,16 +113,6 @@ namespace _365.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap grid_elements_04 {
-            get {
-                object obj = ResourceManager.GetObject("grid_elements-04", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap link_dynamic_gradient {
             get {
                 object obj = ResourceManager.GetObject("link-dynamic-gradient", resourceCulture);
@@ -143,9 +133,9 @@ namespace _365.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Logo {
+        internal static System.Drawing.Bitmap mobile_dynamic_color {
             get {
-                object obj = ResourceManager.GetObject("Logo", resourceCulture);
+                object obj = ResourceManager.GetObject("mobile-dynamic-color", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +143,9 @@ namespace _365.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mobile_dynamic_color {
+        internal static System.Drawing.Bitmap ms {
             get {
-                object obj = ResourceManager.GetObject("mobile-dynamic-color", resourceCulture);
+                object obj = ResourceManager.GetObject("ms", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
