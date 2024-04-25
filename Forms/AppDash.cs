@@ -4,6 +4,7 @@ using _365.Core.Properties;
 using Sungaila.ImmersiveDarkMode.WinForms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Web;
 
 
 namespace _365
@@ -81,14 +82,14 @@ namespace _365
                 }
                 if (menuID == ImportFromJsonContextId)
                 {
-                    this.Text = AppTitle + " Importing..";
+                    this.Text = AppTitle + " - Importing..";
                     ImportFromJson importInstance = new ImportFromJson();
                     importInstance.ImportJson(AccountList.Items.Count);
                     FetchAll();
                 }
                 if (menuID == DeveloperInfoContextId)
-                { 
-                    MessageBox.Show($"MiniCSP is an app developed by DevNoam (Noam Sapir) for Bezeq International. Report bugs to: contact@noamsapir.me", "Developer and app info");
+                {
+                    MessageBox.Show($"MiniCSP is an app developed by DevNoam (Noam Sapir) for Microsoft 365 resellers. Report bugs to: contact@noamsapir.me", "Developer and app info");
                 }
 
             }
@@ -110,6 +111,8 @@ namespace _365
 
         private void AccountList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (editMode is true)
+                return;
             mfaToken = null;
             Edit.Enabled = false;
             if (countdownTimer != null)
@@ -119,15 +122,16 @@ namespace _365
             }
             // Check if an item is selected
             AccountListEntry buttonId = (AccountListEntry)AccountList.SelectedItem;
-            if (AccountList.SelectedIndex != -1)
+            if (buttonId != null && buttonId.id != -1)
             {
                 // Get the selected button ID
+                GC.Collect();
                 AccountProp account = DatabaseManager.FetchAccount(buttonId.id);
                 if (account != null)
                 {
                     //Set properties
                     selectedId = buttonId.id;
-                    CustomerName.Text = account.customerName;
+                    CustomerName.Text = HttpUtility.HtmlDecode(account.customerName);
                     while (CustomerName.Width < System.Windows.Forms.TextRenderer.MeasureText(CustomerName.Text,
                     new Font(CustomerName.Font.FontFamily, CustomerName.Font.Size, CustomerName.Font.Style)).Width)
                     {
@@ -137,9 +141,9 @@ namespace _365
                     Email.Text = account.email;
                     Password.Text = account.password;
                     mfaToken = account.mfaToken;
-                    OnMicrosoftDomain.Text = account.domain;
+                    Domain.Text = account.domain;
                     Phone.Text = account.phone;
-                    Notes.Text = account.notes;
+                    Notes.Text = HttpUtility.HtmlDecode(account.notes);
                     isArchived.Checked = (account.isArchived == 1) ? true : false;
                     ModifiedDate.Text = "Last modified: " + account.modifyDate;
                     SelectACustomer.Visible = false;
@@ -148,7 +152,7 @@ namespace _365
                     TokenGenerator(mfaToken);
                 }
             }
-            else if (AccountList.SelectedIndex < 0)
+            else
             {
                 SelectACustomer.Visible = true;
                 SelectACustomer.Enabled = true;
@@ -297,7 +301,7 @@ namespace _365
 
             void SelectEntry(int selectId, AccountListEntry item)
             {
-                if (selectedId != -1 && item.id == selectId)
+                if (selectId != -1 && item.id == selectId)
                     AccountList.SelectedItem = item;
             }
 
@@ -332,6 +336,24 @@ namespace _365
                     Clipboard.SetText(Email.Text);
             }
         }
+        private void CopyDomain(object sender, EventArgs e)
+        {
+            if (!editMode)
+            {
+                Domain.SelectAll();
+                if (!string.IsNullOrEmpty(Domain.Text))
+                    Clipboard.SetText(Domain.Text);
+            }
+        }
+        private void CopyPhone(object sender, EventArgs e)
+        {
+            if (!editMode)
+            {
+                Phone.SelectAll();
+                if (!string.IsNullOrEmpty(Phone.Text))
+                    Clipboard.SetText(Phone.Text);
+            }
+        }
         private void CopyMFA(object sender, EventArgs e)
         {
             if (!editMode)
@@ -363,7 +385,10 @@ namespace _365
                 if (editEntry.accEntry.crmNumber != Crm.Text)
                     Crm.Text = "CRM: " + editEntry.accEntry.crmNumber;
                 if (editEntry.accEntry.customerName != CustomerName.Text)
+                { 
                     CustomerName.Text = editEntry.accEntry.customerName;
+                    FetchAll(selectedId);
+                }
 
                 ModifiedDate.Text = DateTime.Now.ToString();
             }
@@ -386,7 +411,7 @@ namespace _365
                 Password.PasswordChar = '●';
         }
 
-        private void UpdateEntriesNumber() => this.Text = AppTitle + " Found: (" + AccountList.Items.Count.ToString() + ") accounts";
+        private void UpdateEntriesNumber() => this.Text = AppTitle + " - Found: (" + AccountList.Items.Count.ToString() + ") accounts";
 
         AccountEdit EditAccount;
         private void Edit_Click(object sender, EventArgs e)
@@ -399,7 +424,7 @@ namespace _365
                 EditAccount.oldAccountProp = new AccountProp //Move current props to EditAccount
                 {
                     id = selectedId,
-                    domain = OnMicrosoftDomain.Text,
+                    domain = Domain.Text,
                     email = Email.Text,
                     isArchived = Convert.ToInt32(isArchived.Checked),
                     mfaToken = mfaToken,
@@ -417,7 +442,7 @@ namespace _365
                 AccountProp newAccountProp = new AccountProp
                 {
                     id = selectedId,
-                    domain = OnMicrosoftDomain.Text,
+                    domain = Domain.Text,
                     email = Email.Text,
                     isArchived = Convert.ToInt32(isArchived.Checked),
                     mfaToken = MFA.Text,
@@ -446,7 +471,6 @@ namespace _365
                         ChangeEditState(false);
                         EditAccount = null;
                         FetchAll(newAccountProp.id);
-
                         //mfaToken = newAccountProp.mfaToken;
                         //ModifiedDate.Text = "Last modified: " + newAccountProp.modifyDate;
                     }
@@ -464,7 +488,7 @@ namespace _365
 
             void CancelPuslish()
             {
-                OnMicrosoftDomain.Text = EditAccount.oldAccountProp.domain;
+                Domain.Text = EditAccount.oldAccountProp.domain;
                 Email.Text = EditAccount.oldAccountProp.email;
                 isArchived.Checked = (EditAccount.oldAccountProp.isArchived == 1) ? true : false;
                 Phone.Text = EditAccount.oldAccountProp.phone;
@@ -488,7 +512,7 @@ namespace _365
                     Password.ReadOnly = false;
                     MFA.ReadOnly = false;
                     MFA.Enabled = true;
-                    OnMicrosoftDomain.ReadOnly = false;
+                    Domain.ReadOnly = false;
                     Phone.ReadOnly = false;
                     Notes.ReadOnly = false;
                     isArchived.Enabled = true;
@@ -508,7 +532,7 @@ namespace _365
                     Email.ReadOnly = true;
                     Password.ReadOnly = true;
                     MFA.ReadOnly = true;
-                    OnMicrosoftDomain.ReadOnly = true;
+                    Domain.ReadOnly = true;
                     Phone.ReadOnly = true;
                     Notes.ReadOnly = true;
                     isArchived.Enabled = false;
@@ -524,14 +548,6 @@ namespace _365
             }
         }
 
-        private void BezeqClick(object sender, EventArgs e)
-        {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://bezeqint.net/",
-                UseShellExecute = true
-            });
-        }
 
         private void AddAccount_Click(object sender, EventArgs e)
         {
@@ -569,6 +585,15 @@ namespace _365
 
                 MFA.Text = TOTP.secret;
             }
+        }
+
+        private void OpenAdminCenter_Click(object sender, EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://admin.microsoft.com/",
+                UseShellExecute = true
+            });
         }
     }
 }

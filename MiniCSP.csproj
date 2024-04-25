@@ -10,11 +10,11 @@
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
     <StartupObject>_365.Program</StartupObject>
     <ApplicationIcon>Properties\Icons\AppIcon.ico</ApplicationIcon>
-    <Company>Bezeq International</Company>
+    <Company>DevNoam (noamsapir.me)</Company>
     <Authors>DevNoam (noamsapir.me)</Authors>
     <Version>0.8</Version>
-    <Title>MiniCSP - Bezeq International</Title>
-    <Copyright>DevNoam (noamsapir.me), Bezeq International</Copyright>
+    <Title>MiniCSP - Credentials manager</Title>
+    <Copyright>DevNoam (noamsapir.me)</Copyright>
     <Description>View and manage CSP 365 global admins credentials</Description>
   </PropertyGroup>
 

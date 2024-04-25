@@ -3,6 +3,7 @@ using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
 using Sungaila.ImmersiveDarkMode.WinForms;
 using System.Linq;
+using System.Web;
 using System.Windows.Forms;
 using ZXing;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -27,7 +28,8 @@ namespace _365
             Title1.Text = "Edit core account";
             Title2.Visible = false;
             this.Text = "Edit core account";
-            CRMCustomerName.Text = entry.customerName;
+            Create.Text = "Publish changes";
+            CRMCustomerName.Text = HttpUtility.HtmlDecode(entry.customerName);
             CRMNumber.Text = entry.crmNumber;
         }
 
@@ -39,7 +41,22 @@ namespace _365
 
         private void Create_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(CRMCustomerName.Text) || string.IsNullOrWhiteSpace(CRMNumber.Text))
+            if (editMode == true && string.IsNullOrWhiteSpace(CRMCustomerName.Text) && string.IsNullOrWhiteSpace(CRMNumber.Text))
+            { 
+                var crmExist = MessageBox.Show("Delete account?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                if (crmExist == DialogResult.Yes)
+                {
+                    //Account deletion
+                    bool deleted = DatabaseManager.DeleteAccount(selectedId);
+                    if (deleted)
+                    { 
+                        MessageBox.Show("Account deleted successfully", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }else if(deleted == false)
+                        MessageBox.Show("Error deleting account.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else if (string.IsNullOrWhiteSpace(CRMCustomerName.Text) || string.IsNullOrWhiteSpace(CRMNumber.Text))
             {
                 MessageBox.Show("Cannot leave blank fields", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
