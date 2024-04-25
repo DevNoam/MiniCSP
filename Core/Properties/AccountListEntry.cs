@@ -1,4 +1,6 @@
-﻿namespace _365.Core.Properties
+﻿using System.Web;
+
+namespace _365.Core.Properties
 {
     public class AccountListEntry
     {
@@ -7,7 +9,7 @@
         public bool isArchived { get; set; }
         public override string ToString()
         {
-            return customerName;
+            return HttpUtility.HtmlDecode(customerName);
         }
     }
 }
