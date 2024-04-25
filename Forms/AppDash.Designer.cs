@@ -31,7 +31,6 @@
             PictureBox pictureBox4;
             PictureBox pictureBox3;
             PictureBox pictureBox2;
-            PictureBox pictureBox1;
             PictureBox pictureBox5;
             Label label1;
             Label label5;
@@ -39,36 +38,37 @@
             PictureBox pictureBox6;
             PictureBox pictureBox7;
             PictureBox pictureBox8;
+            Panel panel1;
+            Label label4;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppDash));
-            Notes = new RichTextBox();
-            Edit = new Button();
-            Logs = new Button();
-            MFATimer = new ProgressBar();
-            Email = new TextBox();
-            isArchived = new CheckBox();
-            MFA = new TextBox();
-            Password = new TextBox();
-            AccountList = new ListBox();
-            AccountSearcher = new TextBox();
-            AccountSelectGroup = new GroupBox();
-            AddAccount = new Button();
-            CustomerName = new Label();
-            OnMicrosoftDomain = new TextBox();
-            panel1 = new Panel();
             SelectACustomer = new Panel();
-            label4 = new Label();
+            CustomerName = new Label();
             label8 = new Label();
             ModifiedDate = new Label();
             label3 = new Label();
             label2 = new Label();
+            Logs = new Button();
+            Notes = new RichTextBox();
+            Domain = new TextBox();
+            Password = new TextBox();
+            MFA = new TextBox();
+            isArchived = new CheckBox();
+            Email = new TextBox();
+            MFATimer = new ProgressBar();
             label7 = new Label();
             Phone = new TextBox();
+            Edit = new Button();
             Crm = new Label();
             UploadQR = new Button();
+            OpenAdminCenter = new Button();
+            AccountList = new ListBox();
+            AccountSearcher = new TextBox();
+            AddAccount = new Button();
+            ControlPanel = new Panel();
+            panel2 = new Panel();
             pictureBox4 = new PictureBox();
             pictureBox3 = new PictureBox();
             pictureBox2 = new PictureBox();
-            pictureBox1 = new PictureBox();
             pictureBox5 = new PictureBox();
             label1 = new Label();
             label5 = new Label();
@@ -76,17 +76,19 @@
             pictureBox6 = new PictureBox();
             pictureBox7 = new PictureBox();
             pictureBox8 = new PictureBox();
+            panel1 = new Panel();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
-            AccountSelectGroup.SuspendLayout();
             panel1.SuspendLayout();
             SelectACustomer.SuspendLayout();
+            ControlPanel.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox4
@@ -129,19 +131,6 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 10;
             pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.Bottom;
-            pictureBox1.Image = Properties.Resources.Logo;
-            pictureBox1.Location = new Point(9, 546);
-            pictureBox1.Margin = new Padding(3, 4, 3, 4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(149, 55);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += BezeqClick;
             // 
             // pictureBox5
             // 
@@ -224,201 +213,6 @@
             pictureBox8.TabIndex = 35;
             pictureBox8.TabStop = false;
             // 
-            // Notes
-            // 
-            Notes.Location = new Point(46, 340);
-            Notes.Margin = new Padding(3, 4, 3, 4);
-            Notes.Name = "Notes";
-            Notes.ReadOnly = true;
-            Notes.Size = new Size(257, 123);
-            Notes.TabIndex = 7;
-            Notes.Text = "";
-            // 
-            // Edit
-            // 
-            Edit.BackColor = Color.Transparent;
-            Edit.BackgroundImage = Properties.Resources.Settings;
-            Edit.BackgroundImageLayout = ImageLayout.Zoom;
-            Edit.Enabled = false;
-            Edit.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
-            Edit.FlatAppearance.BorderSize = 0;
-            Edit.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            Edit.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
-            Edit.FlatStyle = FlatStyle.Flat;
-            Edit.ForeColor = Color.Transparent;
-            Edit.Image = Properties.Resources.Settings;
-            Edit.Location = new Point(301, 2);
-            Edit.Margin = new Padding(3, 4, 3, 4);
-            Edit.Name = "Edit";
-            Edit.Size = new Size(69, 57);
-            Edit.TabIndex = 8;
-            Edit.UseMnemonic = false;
-            Edit.UseVisualStyleBackColor = false;
-            Edit.Click += Edit_Click;
-            // 
-            // Logs
-            // 
-            Logs.BackColor = Color.Black;
-            Logs.Enabled = false;
-            Logs.Location = new Point(0, 554);
-            Logs.Margin = new Padding(3, 4, 3, 4);
-            Logs.Name = "Logs";
-            Logs.Size = new Size(86, 31);
-            Logs.TabIndex = 14;
-            Logs.Text = "Logs";
-            Logs.UseVisualStyleBackColor = false;
-            Logs.Visible = false;
-            // 
-            // MFATimer
-            // 
-            MFATimer.AccessibleRole = AccessibleRole.None;
-            MFATimer.BackColor = Color.Yellow;
-            MFATimer.ForeColor = Color.DeepSkyBlue;
-            MFATimer.Location = new Point(44, 213);
-            MFATimer.Margin = new Padding(3, 4, 3, 4);
-            MFATimer.Maximum = 30;
-            MFATimer.Name = "MFATimer";
-            MFATimer.Size = new Size(169, 6);
-            MFATimer.Style = ProgressBarStyle.Continuous;
-            MFATimer.TabIndex = 50;
-            // 
-            // Email
-            // 
-            Email.AllowDrop = true;
-            Email.Location = new Point(46, 97);
-            Email.Margin = new Padding(3, 4, 3, 4);
-            Email.Name = "Email";
-            Email.ReadOnly = true;
-            Email.Size = new Size(257, 23);
-            Email.TabIndex = 2;
-            Email.Click += CopyMail;
-            // 
-            // isArchived
-            // 
-            isArchived.BackColor = Color.Transparent;
-            isArchived.Enabled = false;
-            isArchived.ForeColor = Color.White;
-            isArchived.Location = new Point(1, 543);
-            isArchived.Margin = new Padding(3, 4, 3, 4);
-            isArchived.Name = "isArchived";
-            isArchived.Size = new Size(75, 29);
-            isArchived.TabIndex = 8;
-            isArchived.TabStop = false;
-            isArchived.UseVisualStyleBackColor = false;
-            // 
-            // MFA
-            // 
-            MFA.Location = new Point(44, 192);
-            MFA.Margin = new Padding(3, 4, 3, 4);
-            MFA.Name = "MFA";
-            MFA.ReadOnly = true;
-            MFA.Size = new Size(169, 23);
-            MFA.TabIndex = 4;
-            MFA.Click += CopyMFA;
-            // 
-            // Password
-            // 
-            Password.AllowDrop = true;
-            Password.Location = new Point(45, 145);
-            Password.Margin = new Padding(3, 4, 3, 4);
-            Password.Name = "Password";
-            Password.PasswordChar = '●';
-            Password.ReadOnly = true;
-            Password.Size = new Size(257, 23);
-            Password.TabIndex = 3;
-            Password.Click += CopyPassword;
-            Password.KeyPress += PasswordFieldDisableKey;
-            Password.MouseEnter += RevealPassword;
-            Password.MouseLeave += HidePassword;
-            // 
-            // AccountList
-            // 
-            AccountList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            AccountList.BackColor = Color.FromArgb(113, 113, 113);
-            AccountList.BorderStyle = BorderStyle.FixedSingle;
-            AccountList.CausesValidation = false;
-            AccountList.ForeColor = SystemColors.ButtonHighlight;
-            AccountList.FormattingEnabled = true;
-            AccountList.ImeMode = ImeMode.Disable;
-            AccountList.ItemHeight = 15;
-            AccountList.Location = new Point(6, 56);
-            AccountList.Margin = new Padding(3, 4, 3, 4);
-            AccountList.Name = "AccountList";
-            AccountList.Size = new Size(221, 482);
-            AccountList.TabIndex = 1;
-            AccountList.SelectedIndexChanged += AccountList_SelectedIndexChanged;
-            // 
-            // AccountSearcher
-            // 
-            AccountSearcher.Anchor = AnchorStyles.Top;
-            AccountSearcher.BorderStyle = BorderStyle.FixedSingle;
-            AccountSearcher.CausesValidation = false;
-            AccountSearcher.Location = new Point(5, 21);
-            AccountSearcher.Margin = new Padding(3, 4, 3, 4);
-            AccountSearcher.Name = "AccountSearcher";
-            AccountSearcher.PlaceholderText = "Search..";
-            AccountSearcher.Size = new Size(223, 23);
-            AccountSearcher.TabIndex = 0;
-            AccountSearcher.TextChanged += Search;
-            AccountSearcher.KeyPress += Search;
-            // 
-            // AccountSelectGroup
-            // 
-            AccountSelectGroup.Controls.Add(AccountList);
-            AccountSelectGroup.Controls.Add(AccountSearcher);
-            AccountSelectGroup.Controls.Add(pictureBox1);
-            AccountSelectGroup.Controls.Add(AddAccount);
-            AccountSelectGroup.FlatStyle = FlatStyle.Flat;
-            AccountSelectGroup.ForeColor = Color.Transparent;
-            AccountSelectGroup.Location = new Point(-4, -9);
-            AccountSelectGroup.Margin = new Padding(3, 4, 3, 4);
-            AccountSelectGroup.Name = "AccountSelectGroup";
-            AccountSelectGroup.Padding = new Padding(3, 4, 3, 4);
-            AccountSelectGroup.Size = new Size(233, 609);
-            AccountSelectGroup.TabIndex = 1;
-            AccountSelectGroup.TabStop = false;
-            // 
-            // AddAccount
-            // 
-            AddAccount.BackgroundImage = Properties.Resources.plus_dynamic_gradient;
-            AddAccount.BackgroundImageLayout = ImageLayout.Stretch;
-            AddAccount.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
-            AddAccount.FlatAppearance.BorderSize = 0;
-            AddAccount.FlatAppearance.MouseDownBackColor = Color.Transparent;
-            AddAccount.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
-            AddAccount.FlatStyle = FlatStyle.Flat;
-            AddAccount.ForeColor = Color.Transparent;
-            AddAccount.Location = new Point(161, 545);
-            AddAccount.Margin = new Padding(3, 4, 3, 4);
-            AddAccount.Name = "AddAccount";
-            AddAccount.Size = new Size(65, 55);
-            AddAccount.TabIndex = 9;
-            AddAccount.UseVisualStyleBackColor = false;
-            AddAccount.Click += AddAccount_Click;
-            // 
-            // CustomerName
-            // 
-            CustomerName.Anchor = AnchorStyles.Left;
-            CustomerName.FlatStyle = FlatStyle.Flat;
-            CustomerName.Font = new Font("Roboto", 18F, FontStyle.Bold);
-            CustomerName.Location = new Point(43, 2);
-            CustomerName.Name = "CustomerName";
-            CustomerName.Size = new Size(258, 32);
-            CustomerName.TabIndex = 3;
-            CustomerName.Text = "Select customer 11111111111";
-            CustomerName.TextAlign = ContentAlignment.MiddleLeft;
-            CustomerName.Click += CustomerName_Click;
-            // 
-            // OnMicrosoftDomain
-            // 
-            OnMicrosoftDomain.AllowDrop = true;
-            OnMicrosoftDomain.Location = new Point(44, 243);
-            OnMicrosoftDomain.Margin = new Padding(3, 4, 3, 4);
-            OnMicrosoftDomain.Name = "OnMicrosoftDomain";
-            OnMicrosoftDomain.ReadOnly = true;
-            OnMicrosoftDomain.Size = new Size(257, 23);
-            OnMicrosoftDomain.TabIndex = 5;
-            // 
             // panel1
             // 
             panel1.BackColor = Color.Transparent;
@@ -432,7 +226,7 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(Logs);
             panel1.Controls.Add(Notes);
-            panel1.Controls.Add(OnMicrosoftDomain);
+            panel1.Controls.Add(Domain);
             panel1.Controls.Add(Password);
             panel1.Controls.Add(MFA);
             panel1.Controls.Add(isArchived);
@@ -451,9 +245,10 @@
             panel1.Controls.Add(Edit);
             panel1.Controls.Add(Crm);
             panel1.Controls.Add(UploadQR);
-            panel1.Location = new Point(232, 6);
+            panel1.Controls.Add(OpenAdminCenter);
+            panel1.Location = new Point(224, 6);
             panel1.Name = "panel1";
-            panel1.Size = new Size(375, 585);
+            panel1.Size = new Size(383, 585);
             panel1.TabIndex = 24;
             // 
             // SelectACustomer
@@ -474,6 +269,19 @@
             label4.TabIndex = 0;
             label4.Text = "Select customer";
             label4.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // CustomerName
+            // 
+            CustomerName.Anchor = AnchorStyles.Left;
+            CustomerName.FlatStyle = FlatStyle.Flat;
+            CustomerName.Font = new Font("Roboto", 18F, FontStyle.Bold);
+            CustomerName.Location = new Point(43, 2);
+            CustomerName.Name = "CustomerName";
+            CustomerName.Size = new Size(258, 32);
+            CustomerName.TabIndex = 3;
+            CustomerName.Text = "Select customer 11111111111";
+            CustomerName.TextAlign = ContentAlignment.MiddleLeft;
+            CustomerName.Click += CustomerName_Click;
             // 
             // label8
             // 
@@ -513,6 +321,102 @@
             label2.TabIndex = 25;
             label2.Text = "Password";
             // 
+            // Logs
+            // 
+            Logs.BackColor = Color.Black;
+            Logs.Enabled = false;
+            Logs.Location = new Point(0, 554);
+            Logs.Margin = new Padding(3, 4, 3, 4);
+            Logs.Name = "Logs";
+            Logs.Size = new Size(86, 31);
+            Logs.TabIndex = 14;
+            Logs.Text = "Logs";
+            Logs.UseVisualStyleBackColor = false;
+            Logs.Visible = false;
+            // 
+            // Notes
+            // 
+            Notes.Location = new Point(46, 340);
+            Notes.Margin = new Padding(3, 4, 3, 4);
+            Notes.Name = "Notes";
+            Notes.ReadOnly = true;
+            Notes.Size = new Size(257, 123);
+            Notes.TabIndex = 7;
+            Notes.Text = "";
+            // 
+            // Domain
+            // 
+            Domain.AllowDrop = true;
+            Domain.Location = new Point(44, 243);
+            Domain.Margin = new Padding(3, 4, 3, 4);
+            Domain.Name = "Domain";
+            Domain.ReadOnly = true;
+            Domain.Size = new Size(257, 23);
+            Domain.TabIndex = 5;
+            Domain.Click += CopyDomain;
+            // 
+            // Password
+            // 
+            Password.AllowDrop = true;
+            Password.Location = new Point(45, 145);
+            Password.Margin = new Padding(3, 4, 3, 4);
+            Password.Name = "Password";
+            Password.PasswordChar = '●';
+            Password.ReadOnly = true;
+            Password.Size = new Size(257, 23);
+            Password.TabIndex = 3;
+            Password.Click += CopyPassword;
+            Password.KeyPress += PasswordFieldDisableKey;
+            Password.MouseEnter += RevealPassword;
+            Password.MouseLeave += HidePassword;
+            // 
+            // MFA
+            // 
+            MFA.Location = new Point(44, 192);
+            MFA.Margin = new Padding(3, 4, 3, 4);
+            MFA.Name = "MFA";
+            MFA.ReadOnly = true;
+            MFA.Size = new Size(169, 23);
+            MFA.TabIndex = 4;
+            MFA.Click += CopyMFA;
+            // 
+            // isArchived
+            // 
+            isArchived.BackColor = Color.Transparent;
+            isArchived.Enabled = false;
+            isArchived.ForeColor = Color.White;
+            isArchived.Location = new Point(1, 543);
+            isArchived.Margin = new Padding(3, 4, 3, 4);
+            isArchived.Name = "isArchived";
+            isArchived.Size = new Size(75, 29);
+            isArchived.TabIndex = 8;
+            isArchived.TabStop = false;
+            isArchived.UseVisualStyleBackColor = false;
+            // 
+            // Email
+            // 
+            Email.AllowDrop = true;
+            Email.Location = new Point(46, 97);
+            Email.Margin = new Padding(3, 4, 3, 4);
+            Email.Name = "Email";
+            Email.ReadOnly = true;
+            Email.Size = new Size(257, 23);
+            Email.TabIndex = 2;
+            Email.Click += CopyMail;
+            // 
+            // MFATimer
+            // 
+            MFATimer.AccessibleRole = AccessibleRole.None;
+            MFATimer.BackColor = Color.Yellow;
+            MFATimer.ForeColor = Color.DeepSkyBlue;
+            MFATimer.Location = new Point(44, 213);
+            MFATimer.Margin = new Padding(3, 4, 3, 4);
+            MFATimer.Maximum = 30;
+            MFATimer.Name = "MFATimer";
+            MFATimer.Size = new Size(169, 6);
+            MFATimer.Style = ProgressBarStyle.Continuous;
+            MFATimer.TabIndex = 50;
+            // 
             // label7
             // 
             label7.AutoSize = true;
@@ -531,6 +435,29 @@
             Phone.ReadOnly = true;
             Phone.Size = new Size(257, 23);
             Phone.TabIndex = 6;
+            Phone.Click += CopyPhone;
+            // 
+            // Edit
+            // 
+            Edit.BackColor = Color.Transparent;
+            Edit.BackgroundImage = Properties.Resources.Settings;
+            Edit.BackgroundImageLayout = ImageLayout.Zoom;
+            Edit.Enabled = false;
+            Edit.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
+            Edit.FlatAppearance.BorderSize = 0;
+            Edit.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            Edit.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
+            Edit.FlatStyle = FlatStyle.Flat;
+            Edit.ForeColor = Color.Transparent;
+            Edit.Image = Properties.Resources.Settings;
+            Edit.Location = new Point(301, 2);
+            Edit.Margin = new Padding(3, 4, 3, 4);
+            Edit.Name = "Edit";
+            Edit.Size = new Size(69, 57);
+            Edit.TabIndex = 8;
+            Edit.UseMnemonic = false;
+            Edit.UseVisualStyleBackColor = false;
+            Edit.Click += Edit_Click;
             // 
             // Crm
             // 
@@ -538,7 +465,7 @@
             Crm.AutoSize = true;
             Crm.FlatStyle = FlatStyle.Flat;
             Crm.Font = new Font("Roboto", 16F);
-            Crm.Location = new Point(43, 32);
+            Crm.Location = new Point(47, 32);
             Crm.Name = "Crm";
             Crm.Size = new Size(64, 27);
             Crm.TabIndex = 25;
@@ -569,14 +496,112 @@
             UploadQR.Visible = false;
             UploadQR.Click += UploadQR_Click;
             // 
+            // OpenAdminCenter
+            // 
+            OpenAdminCenter.BackColor = Color.Transparent;
+            OpenAdminCenter.BackgroundImage = Properties.Resources.ms;
+            OpenAdminCenter.BackgroundImageLayout = ImageLayout.Zoom;
+            OpenAdminCenter.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
+            OpenAdminCenter.FlatAppearance.BorderSize = 0;
+            OpenAdminCenter.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            OpenAdminCenter.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
+            OpenAdminCenter.FlatStyle = FlatStyle.Flat;
+            OpenAdminCenter.ForeColor = Color.Transparent;
+            OpenAdminCenter.Image = Properties.Resources.Settings;
+            OpenAdminCenter.Location = new Point(309, 94);
+            OpenAdminCenter.Margin = new Padding(3, 4, 3, 4);
+            OpenAdminCenter.Name = "OpenAdminCenter";
+            OpenAdminCenter.Size = new Size(31, 27);
+            OpenAdminCenter.TabIndex = 52;
+            OpenAdminCenter.UseMnemonic = false;
+            OpenAdminCenter.UseVisualStyleBackColor = false;
+            OpenAdminCenter.Click += OpenAdminCenter_Click;
+            // 
+            // AccountList
+            // 
+            AccountList.BackColor = Color.FromArgb(113, 113, 113);
+            AccountList.BorderStyle = BorderStyle.None;
+            AccountList.CausesValidation = false;
+            AccountList.ForeColor = SystemColors.ButtonHighlight;
+            AccountList.FormattingEnabled = true;
+            AccountList.ImeMode = ImeMode.Disable;
+            AccountList.ItemHeight = 15;
+            AccountList.Location = new Point(3, 35);
+            AccountList.Margin = new Padding(0);
+            AccountList.Name = "AccountList";
+            AccountList.Size = new Size(218, 510);
+            AccountList.TabIndex = 1;
+            AccountList.SelectedIndexChanged += AccountList_SelectedIndexChanged;
+            // 
+            // AccountSearcher
+            // 
+            AccountSearcher.BorderStyle = BorderStyle.FixedSingle;
+            AccountSearcher.CausesValidation = false;
+            AccountSearcher.Dock = DockStyle.Top;
+            AccountSearcher.Location = new Point(3, 5);
+            AccountSearcher.Margin = new Padding(0);
+            AccountSearcher.Name = "AccountSearcher";
+            AccountSearcher.PlaceholderText = "Search..";
+            AccountSearcher.Size = new Size(218, 23);
+            AccountSearcher.TabIndex = 0;
+            AccountSearcher.TextChanged += Search;
+            AccountSearcher.KeyPress += Search;
+            // 
+            // AddAccount
+            // 
+            AddAccount.BackColor = SystemColors.ActiveCaption;
+            AddAccount.BackgroundImage = Properties.Resources.plus_dynamic_gradient;
+            AddAccount.BackgroundImageLayout = ImageLayout.Zoom;
+            AddAccount.Dock = DockStyle.Fill;
+            AddAccount.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
+            AddAccount.FlatAppearance.BorderSize = 0;
+            AddAccount.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            AddAccount.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
+            AddAccount.ForeColor = Color.Transparent;
+            AddAccount.Location = new Point(0, 0);
+            AddAccount.Margin = new Padding(3, 4, 3, 4);
+            AddAccount.Name = "AddAccount";
+            AddAccount.Size = new Size(218, 49);
+            AddAccount.TabIndex = 9;
+            AddAccount.UseVisualStyleBackColor = false;
+            AddAccount.Click += AddAccount_Click;
+            // 
+            // ControlPanel
+            // 
+            ControlPanel.AutoSize = true;
+            ControlPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ControlPanel.Controls.Add(panel2);
+            ControlPanel.Controls.Add(AccountSearcher);
+            ControlPanel.Controls.Add(AccountList);
+            ControlPanel.Dock = DockStyle.Left;
+            ControlPanel.Location = new Point(0, 0);
+            ControlPanel.Margin = new Padding(0);
+            ControlPanel.Name = "ControlPanel";
+            ControlPanel.Padding = new Padding(3, 5, 0, 5);
+            ControlPanel.Size = new Size(221, 593);
+            ControlPanel.TabIndex = 1;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(AddAccount);
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(3, 539);
+            panel2.Margin = new Padding(0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(218, 49);
+            panel2.TabIndex = 1;
+            // 
             // AppDash
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.FromArgb(40, 40, 40);
             BackgroundImage = Properties.Resources.grid_elements_01;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(612, 593);
-            Controls.Add(AccountSelectGroup);
+            Controls.Add(ControlPanel);
             Controls.Add(panel1);
             DoubleBuffered = true;
             ForeColor = SystemColors.Control;
@@ -585,29 +610,29 @@
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "AppDash";
-            Text = "MiniCSP ";
+            Text = "MiniCSP";
             Shown += AppDash_Shown;
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
-            AccountSelectGroup.ResumeLayout(false);
-            AccountSelectGroup.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             SelectACustomer.ResumeLayout(false);
             SelectACustomer.PerformLayout();
+            ControlPanel.ResumeLayout(false);
+            ControlPanel.PerformLayout();
+            panel2.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private ListBox AccountList;
-        private PictureBox pictureBox1;
         private TextBox AccountSearcher;
         private CheckBox isArchived;
         private TextBox Email;
@@ -617,14 +642,13 @@
         private ListBox AdditionalInfo;
         private ProgressBar MFATimer;
         private TextBox MFA;
-        private GroupBox AccountSelectGroup;
         private PictureBox pictureBox2;
         private PictureBox pictureBox4;
         private PictureBox pictureBox3;
         private RichTextBox Notes;
         private Label CustomerName;
         private Button AddAccount;
-        private TextBox OnMicrosoftDomain;
+        private TextBox Domain;
         private Panel panel1;
         private Label label1;
         private Label Crm;
@@ -638,5 +662,8 @@
         private Label ModifiedDate;
         private Label label8;
         private Button UploadQR;
+        private Panel ControlPanel;
+        private Panel panel2;
+        private Button OpenAdminCenter;
     }
 }

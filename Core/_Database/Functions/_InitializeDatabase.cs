@@ -14,7 +14,7 @@ using System.Text;
 public static class _InitializeDatabase
 {
     public const string dbName = "365DB.db";
-    private const string EncryptionKey = "Bezeq0Nezeq!";
+    private const string EncryptionKey = "Just0Random!";
     private static readonly string registryLocation = $@"Software\DevNoam\{Application.ProductName}";
     public static bool Initialize(bool checkConnectionAndPassword = false, string password = "")
     {
@@ -182,7 +182,7 @@ public static class _InitializeDatabase
                 return value;
             }
 
-            var selection = MessageBox.Show("A new Database will be created in the folder: " + path, Application.ProductName, MessageBoxButtons.CancelTryContinue, MessageBoxIcon.Question);
+            var selection = MessageBox.Show("A new Database will be created in the folder: " + path, Application.ProductName, MessageBoxButtons.CancelTryContinue, MessageBoxIcon.Question, MessageBoxDefaultButton.Button3);
             if (selection == DialogResult.Retry)
                 return SetDatabaseLocation();
             else if (selection == DialogResult.Continue)
