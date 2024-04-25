@@ -8,34 +8,40 @@ namespace _365.Core
     {
         public QRTotp GetTOTP()
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-
-
-            fileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif;*.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files (*.*)|*.*";
-            fileDialog.FilterIndex = 1;
-            fileDialog.RestoreDirectory = true;
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog fileDialog = new OpenFileDialog())
             {
-                // Decode the QR code
-                Bitmap image = new Bitmap(fileDialog.FileName);
-                BarcodeReader reader = new BarcodeReader { AutoRotate = true, TryHarder = true };
+                fileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif;*.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files (*.*)|*.*";
+                fileDialog.FilterIndex = 1;
+                fileDialog.RestoreDirectory = true;
 
-                Result result; 
-                try
+                if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    result = reader.Decode(image);
-                }
-                catch (Exception)
-                {
-                    return new QRTotp { secret = "error" };
-                }
+                    using (Bitmap image = new Bitmap(fileDialog.FileName))
+                    {
+                        BarcodeReader reader = new BarcodeReader { AutoRotate = true, TryHarder = true };
 
-                string decoded = result?.Text?.Trim();
-                if(!string.IsNullOrWhiteSpace(decoded))
-                    return ExtractQRCodeData(decoded);
+                        Result result;
+                        try
+                        {
+                            result = reader.Decode(image);
+                        }
+                        catch (Exception)
+                        {
+                            return new QRTotp { secret = "error" };
+                        }
+
+                        string decoded = result?.Text?.Trim();
+                        if (!string.IsNullOrWhiteSpace(decoded))
+                        {
+                            return ExtractQRCodeData(decoded);
+                        }
+                    }
+                }
             }
+
             return new QRTotp { secret = "error" };
         }
+
 
 
 

@@ -1,5 +1,6 @@
 ﻿using _365.Core.Database;
 using _365.Core.Properties;
+using System.Web;
 
 namespace _365.Core
 {
@@ -27,13 +28,17 @@ namespace _365.Core
             {
                 changedProps["MFA"] = newAccountProp.mfaToken;
             }
+            if (newAccountProp.domain != oldAccountProp.domain)
+            {
+                changedProps["Domain"] = newAccountProp.domain;
+            }
             if (newAccountProp.phone != oldAccountProp.phone)
             {
                 changedProps["Phone"] = newAccountProp.phone;
             }
             if (newAccountProp.notes != oldAccountProp.notes)
             {
-                changedProps["Notes"] = newAccountProp.notes;
+                changedProps["Notes"] = HttpUtility.HtmlEncode(newAccountProp.notes);
             }
             if (newAccountProp.isArchived != oldAccountProp.isArchived)
             {
