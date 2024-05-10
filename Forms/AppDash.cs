@@ -123,7 +123,7 @@ namespace _365
             // Check if an item is selected
             AccountListEntry buttonId = (AccountListEntry)AccountList.SelectedItem;
             int selectIndex = AccountList.SelectedIndex;
-            await Task.Delay(350);
+            await Task.Delay(300);
             if (selectIndex != AccountList.SelectedIndex)
                 return;
             if (buttonId != null && buttonId.id != -1)
@@ -300,7 +300,6 @@ namespace _365
                     AccountList.Items.Add(account);
                     SelectEntry(selectId, account);
                 }
-
             }
 
             void SelectEntry(int selectId, AccountListEntry item)
@@ -384,6 +383,12 @@ namespace _365
             editEntry.InitEditMode(selectedId, entry);
             editEntry.ShowDialog();
 
+            if (editEntry.purgeAccount == true)
+            { 
+                CancelPuslish();
+                selectedId = -1;
+                FetchAll(selectedId);
+            }
             if (editEntry.accEntry != null)
             {
                 if (editEntry.accEntry.crmNumber != Crm.Text)
@@ -490,65 +495,65 @@ namespace _365
             }
 
 
-            void CancelPuslish()
-            {
-                Domain.Text = EditAccount.oldAccountProp.domain;
-                Email.Text = EditAccount.oldAccountProp.email;
-                isArchived.Checked = (EditAccount.oldAccountProp.isArchived == 1) ? true : false;
-                Phone.Text = EditAccount.oldAccountProp.phone;
-                Password.Text = EditAccount.oldAccountProp.password;
-                Notes.Text = EditAccount.oldAccountProp.notes;
-                mfaToken = EditAccount.oldAccountProp.mfaToken;
+        }
+        void CancelPuslish()
+        {
+            Domain.Text = EditAccount.oldAccountProp.domain;
+            Email.Text = EditAccount.oldAccountProp.email;
+            isArchived.Checked = (EditAccount.oldAccountProp.isArchived == 1) ? true : false;
+            Phone.Text = EditAccount.oldAccountProp.phone;
+            Password.Text = EditAccount.oldAccountProp.password;
+            Notes.Text = EditAccount.oldAccountProp.notes;
+            mfaToken = EditAccount.oldAccountProp.mfaToken;
 
-                ChangeEditState(false);
-                EditAccount = null;
+            ChangeEditState(false);
+            EditAccount = null;
+        }
+
+
+        void ChangeEditState(bool edit)
+        {
+            if (edit is true)
+            {
+                AccountList.Enabled = false;
+                AccountSearcher.Enabled = false;
+                AddAccount.Enabled = false;
+                Email.ReadOnly = false;
+                Password.ReadOnly = false;
+                MFA.ReadOnly = false;
+                MFA.Enabled = true;
+                Domain.ReadOnly = false;
+                Phone.ReadOnly = false;
+                Notes.ReadOnly = false;
+                isArchived.Enabled = true;
+                MFATimer.Visible = false;
+                MFA.Text = mfaToken;
+                UploadQR.Visible = true;
+                UploadQR.Enabled = true;
+                editMode = true;
+                RevealPassword(null, null);
+                Edit.BackgroundImage = Properties.Resources.Save;
             }
-
-
-            void ChangeEditState(bool edit)
+            else if (edit is false)
             {
-                if (edit is true)
-                {
-                    AccountList.Enabled = false;
-                    AccountSearcher.Enabled = false;
-                    AddAccount.Enabled = false;
-                    Email.ReadOnly = false;
-                    Password.ReadOnly = false;
-                    MFA.ReadOnly = false;
-                    MFA.Enabled = true;
-                    Domain.ReadOnly = false;
-                    Phone.ReadOnly = false;
-                    Notes.ReadOnly = false;
-                    isArchived.Enabled = true;
-                    MFATimer.Visible = false;
-                    MFA.Text = mfaToken;
-                    UploadQR.Visible = true;
-                    UploadQR.Enabled = true;
-                    editMode = true;
-                    RevealPassword(sender, e);
-                    Edit.BackgroundImage = Properties.Resources.Save;
-                }
-                else if (edit is false)
-                {
-                    AccountList.Enabled = true;
-                    AccountSearcher.Enabled = true;
-                    AddAccount.Enabled = true;
-                    Email.ReadOnly = true;
-                    Password.ReadOnly = true;
-                    MFA.ReadOnly = true;
-                    Domain.ReadOnly = true;
-                    Phone.ReadOnly = true;
-                    Notes.ReadOnly = true;
-                    isArchived.Enabled = false;
-                    MFATimer.Visible = true;
-                    UploadQR.Visible = false;
-                    UploadQR.Enabled = false;
-                    editMode = false;
-                    HidePassword(sender, e);
-                    Edit.BackgroundImage = Properties.Resources.Settings;
+                AccountList.Enabled = true;
+                AccountSearcher.Enabled = true;
+                AddAccount.Enabled = true;
+                Email.ReadOnly = true;
+                Password.ReadOnly = true;
+                MFA.ReadOnly = true;
+                Domain.ReadOnly = true;
+                Phone.ReadOnly = true;
+                Notes.ReadOnly = true;
+                isArchived.Enabled = false;
+                MFATimer.Visible = true;
+                UploadQR.Visible = false;
+                UploadQR.Enabled = false;
+                editMode = false;
+                HidePassword(null, null);
+                Edit.BackgroundImage = Properties.Resources.Settings;
 
-                    TokenGenerator(mfaToken);
-                }
+                TokenGenerator(mfaToken);
             }
         }
 

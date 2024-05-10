@@ -2,6 +2,7 @@
 using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
 using Sungaila.ImmersiveDarkMode.WinForms;
+using System.Formats.Tar;
 using System.Linq;
 using System.Web;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace _365
     {
         public NewEntry accEntry { get; private set; }
         private bool editMode = false;
+        public bool purgeAccount { get; private set; }
         private int selectedId;
         public CreateEntry()
         {
@@ -49,11 +51,22 @@ namespace _365
                     //Account deletion
                     bool deleted = DatabaseManager.DeleteAccount(selectedId);
                     if (deleted)
-                    { 
+                    {
                         MessageBox.Show("Account deleted successfully", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        purgeAccount = true;
                         this.Close();
-                    }else if(deleted == false)
+                        return;
+                    }
+                    else if (!deleted)
+                    {
                         MessageBox.Show("Error deleting account.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Cannot leave blank fields", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
             }
             else if (string.IsNullOrWhiteSpace(CRMCustomerName.Text) || string.IsNullOrWhiteSpace(CRMNumber.Text))
