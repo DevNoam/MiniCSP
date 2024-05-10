@@ -1,4 +1,5 @@
-﻿using _365.Core.Database;
+﻿using _365.Core;
+using _365.Core.Database;
 using _365.Core.Properties;
 using Microsoft.Data.Sqlite;
 using Sungaila.ImmersiveDarkMode.WinForms;
@@ -48,11 +49,18 @@ namespace _365
                 var crmExist = MessageBox.Show("Delete account?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
                 if (crmExist == DialogResult.Yes)
                 {
+
+                    //Copy database before
+                    CopyDatabase.Copy();
+
                     //Account deletion
                     bool deleted = DatabaseManager.DeleteAccount(selectedId);
                     if (deleted)
                     {
                         MessageBox.Show("Account deleted successfully", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
+                        //GENERATE LOG TO AN OUTPUT FILE IN CHILD FOLDER
+                        
                         purgeAccount = true;
                         this.Close();
                         return;

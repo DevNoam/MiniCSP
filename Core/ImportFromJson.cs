@@ -45,20 +45,7 @@ namespace _365.Core
 
 
             //Backup the DB.
-            if (existedEntries > 0)
-            {
-                DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(databaseLocation, "Backup"));
-                string dbToCopy = Path.Combine(databaseLocation, _InitializeDatabase.dbName);
-                try
-                {
-                    File.Copy(dbToCopy, Path.Combine(dir.FullName, DateTime.Now.ToString("dd.MM.yyyy HH.mm") + "_" + _InitializeDatabase.dbName));
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Generic error, check for read permissions and try again.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error); ;
-                    return false;
-                }
-            }
+            CopyDatabase.Copy();
 
 
             List<NewEntry> importFailed = new List<NewEntry>();
