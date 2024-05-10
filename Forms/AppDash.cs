@@ -109,7 +109,7 @@ namespace _365
             FetchAll(0);
         }
 
-        private void AccountList_SelectedIndexChanged(object sender, EventArgs e)
+        private async void AccountList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (editMode is true)
                 return;
@@ -122,6 +122,10 @@ namespace _365
             }
             // Check if an item is selected
             AccountListEntry buttonId = (AccountListEntry)AccountList.SelectedItem;
+            int selectIndex = AccountList.SelectedIndex;
+            await Task.Delay(350);
+            if (selectIndex != AccountList.SelectedIndex)
+                return;
             if (buttonId != null && buttonId.id != -1)
             {
                 // Get the selected button ID
