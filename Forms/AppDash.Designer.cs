@@ -61,6 +61,7 @@
             Crm = new Label();
             UploadQR = new Button();
             OpenAdminCenter = new Button();
+            GeneratePassword = new Button();
             AccountList = new ListBox();
             AccountSearcher = new TextBox();
             AddAccount = new Button();
@@ -246,6 +247,7 @@
             panel1.Controls.Add(Crm);
             panel1.Controls.Add(UploadQR);
             panel1.Controls.Add(OpenAdminCenter);
+            panel1.Controls.Add(GeneratePassword);
             panel1.Location = new Point(224, 6);
             panel1.Name = "panel1";
             panel1.Size = new Size(383, 585);
@@ -517,6 +519,29 @@
             OpenAdminCenter.UseVisualStyleBackColor = false;
             OpenAdminCenter.Click += OpenAdminCenter_Click;
             // 
+            // GeneratePassword
+            // 
+            GeneratePassword.BackColor = Color.Transparent;
+            GeneratePassword.BackgroundImage = (Image)resources.GetObject("GeneratePassword.BackgroundImage");
+            GeneratePassword.BackgroundImageLayout = ImageLayout.Zoom;
+            GeneratePassword.Enabled = false;
+            GeneratePassword.FlatAppearance.BorderColor = Color.FromArgb(40, 40, 40);
+            GeneratePassword.FlatAppearance.BorderSize = 0;
+            GeneratePassword.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            GeneratePassword.FlatAppearance.MouseOverBackColor = SystemColors.ControlDarkDark;
+            GeneratePassword.FlatStyle = FlatStyle.Flat;
+            GeneratePassword.ForeColor = Color.Transparent;
+            GeneratePassword.Image = Properties.Resources.Settings;
+            GeneratePassword.Location = new Point(309, 140);
+            GeneratePassword.Margin = new Padding(3, 4, 3, 4);
+            GeneratePassword.Name = "GeneratePassword";
+            GeneratePassword.Size = new Size(41, 37);
+            GeneratePassword.TabIndex = 53;
+            GeneratePassword.UseMnemonic = false;
+            GeneratePassword.UseVisualStyleBackColor = false;
+            GeneratePassword.Visible = false;
+            GeneratePassword.Click += GeneratePassword_Click;
+            // 
             // AccountList
             // 
             AccountList.BackColor = Color.FromArgb(113, 113, 113);
@@ -665,5 +690,6 @@
         private Panel ControlPanel;
         private Panel panel2;
         private Button OpenAdminCenter;
+        private Button GeneratePassword;
     }
 }

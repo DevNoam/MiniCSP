@@ -383,7 +383,7 @@ namespace _365
             editEntry.ShowDialog();
 
             if (editEntry.purgeAccount == true)
-            { 
+            {
                 CancelPuslish();
                 selectedId = -1;
                 SelectACustomer.Visible = true;
@@ -396,7 +396,7 @@ namespace _365
                 if (editEntry.accEntry.crmNumber != Crm.Text)
                     Crm.Text = "CRM: " + editEntry.accEntry.crmNumber;
                 if (editEntry.accEntry.customerName != CustomerName.Text)
-                { 
+                {
                     CustomerName.Text = editEntry.accEntry.customerName;
                     FetchAll(selectedId);
                 }
@@ -422,17 +422,18 @@ namespace _365
                 Password.PasswordChar = '●';
         }
 
-        private void UpdateEntriesNumber(int printEntries = -1) {
+        private void UpdateEntriesNumber(int printEntries = -1)
+        {
             int entries = 0;
             foreach (AccountListEntry item in AccountList.Items)
             {
                 if (item.id != -1)
                     entries++;
             }
-            if(printEntries != -1)
+            if (printEntries != -1)
                 entries = printEntries;
 
-            if(entries > 0)
+            if (entries > 0)
                 this.Text = AppTitle + " - Found: (" + entries.ToString() + ") accounts";
             else
                 this.Text = AppTitle + " - No accounts found";
@@ -546,6 +547,8 @@ namespace _365
                 MFA.Text = mfaToken;
                 UploadQR.Visible = true;
                 UploadQR.Enabled = true;
+                GeneratePassword.Visible = true;
+                GeneratePassword.Enabled = true;
                 editMode = true;
                 RevealPassword(null, null);
                 Edit.BackgroundImage = Properties.Resources.Save;
@@ -565,6 +568,8 @@ namespace _365
                 MFATimer.Visible = true;
                 UploadQR.Visible = false;
                 UploadQR.Enabled = false;
+                GeneratePassword.Visible = false;
+                GeneratePassword.Enabled = false;
                 editMode = false;
                 HidePassword(null, null);
                 Edit.BackgroundImage = Properties.Resources.Settings;
@@ -583,6 +588,7 @@ namespace _365
                 FetchAll(entryForm.accEntry.Id);
             }
         }
+
 
         private void UploadQR_Click(object sender, EventArgs e)
         {
@@ -619,6 +625,18 @@ namespace _365
                 FileName = "https://admin.microsoft.com/",
                 UseShellExecute = true
             });
+        }
+
+        private void GeneratePassword_Click(object sender, EventArgs e)
+        {
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|:<>?-[]";
+            var random = new Random();
+            var result = new string(
+                Enumerable.Repeat(chars, 64)
+                          .Select(s => s[random.Next(s.Length)])
+                          .ToArray());
+
+            Password.Text = result;
         }
     }
 }
