@@ -59,7 +59,7 @@ namespace _365
                 AppendMenu(systemMenuHandle, MF_STRING, ExportToJsonContextId, "Export to json");
                 AppendMenu(systemMenuHandle, MF_STRING, ImportFromJsonContextId, "Import from json");
                 AppendMenu(systemMenuHandle, MF_SEPARATOR, 0, string.Empty);
-                AppendMenu(systemMenuHandle, MF_STRING, DeveloperInfoContextId, "About & Developer Info");
+                AppendMenu(systemMenuHandle, MF_STRING, DeveloperInfoContextId, "Developer Info");
             }
         }
         protected override void WndProc(ref Message m)
@@ -89,7 +89,7 @@ namespace _365
                 }
                 if (menuID == DeveloperInfoContextId)
                 {
-                    MessageBox.Show($"MiniCSP is an app developed by DevNoam (Noam Sapir) for Microsoft 365 resellers. Report bugs to: contact@noamsapir.me", "Developer and app info");
+                    MessageBox.Show($"MiniCSP is an app developed by DevNoam for Microsoft 365 resellers. Report bugs to: contact@noamsapir.me", "Developer info");
                 }
 
             }
@@ -636,7 +636,16 @@ namespace _365
                           .Select(s => s[random.Next(s.Length)])
                           .ToArray());
 
-            Password.Text = result;
+            if (!string.IsNullOrEmpty(Password.Text))
+            {
+                var selection = MessageBox.Show("Generate password and override existing?", System.Windows.Forms.Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (selection == DialogResult.Yes)
+                    Password.Text = result;
+                else
+                    return;
+            }else
+                Password.Text = result;
         }
     }
 }
