@@ -260,7 +260,7 @@ namespace _365
                         }
                     }
                 }
-                UpdateEntriesNumber();
+                UpdateEntriesNumber(0);
             }
             else if (string.IsNullOrEmpty(searchText))
             {
@@ -279,7 +279,6 @@ namespace _365
             AccountList.Items.Clear();
             AccountListEntry[] accounts = DatabaseManager.FetchAllEntries();
             List<AccountListEntry> archivedEntries = new List<AccountListEntry>();
-
             foreach (var account in accounts)
             {
                 if (account.isArchived == true)
@@ -387,7 +386,10 @@ namespace _365
             { 
                 CancelPuslish();
                 selectedId = -1;
+                SelectACustomer.Visible = true;
+                SelectACustomer.Enabled = true;
                 FetchAll(selectedId);
+
             }
             if (editEntry.accEntry != null)
             {
@@ -420,7 +422,21 @@ namespace _365
                 Password.PasswordChar = '●';
         }
 
-        private void UpdateEntriesNumber() => this.Text = AppTitle + " - Found: (" + AccountList.Items.Count.ToString() + ") accounts";
+        private void UpdateEntriesNumber(int printEntries = -1) {
+            int entries = 0;
+            foreach (AccountListEntry item in AccountList.Items)
+            {
+                if (item.id != -1)
+                    entries++;
+            }
+            if(printEntries != -1)
+                entries = printEntries;
+
+            if(entries > 0)
+                this.Text = AppTitle + " - Found: (" + entries.ToString() + ") accounts";
+            else
+                this.Text = AppTitle + " - No accounts found";
+        }
 
         AccountEdit EditAccount;
         private void Edit_Click(object sender, EventArgs e)

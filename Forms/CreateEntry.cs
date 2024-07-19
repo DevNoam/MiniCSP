@@ -96,7 +96,7 @@ namespace _365
 
             if (DatabaseManager.SearchEntries(entry.crmNumber).Count() > 0)
             {
-                var crmExist = MessageBox.Show("This CRM number exist in the databse, do you wish to continue?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+                var crmExist = MessageBox.Show("This CRM number might exist in the databse, do you wish to continue?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
                 if (crmExist == DialogResult.No)
                     return;
             }
