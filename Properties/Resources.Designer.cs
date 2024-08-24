@@ -133,6 +133,16 @@ namespace _365.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap mail_dynamic_gradient {
+            get {
+                object obj = ResourceManager.GetObject("mail-dynamic-gradient", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mobile_dynamic_color {
             get {
                 object obj = ResourceManager.GetObject("mobile-dynamic-color", resourceCulture);

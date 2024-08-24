@@ -20,7 +20,7 @@ namespace _365.Core
             }
 
 
-            var option = MessageBox.Show("Importing won't override existing entries but rather create new entries. Place 'import.json' file to the DB folder.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            var option = MessageBox.Show("Importing won't override existing entries but rather create new entries. Place 'import.json' into to the database folder.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             if (option == DialogResult.Cancel)
                 return false;
 
@@ -69,6 +69,7 @@ namespace _365.Core
                 changedProps["Password"] = account.password ?? string.Empty;
                 changedProps["MFA"] = account.mfaToken ?? string.Empty;
                 changedProps["Phone"] = account.phone ?? string.Empty;
+                changedProps["RecoveryEmail"] = account.recoveryEmail ?? string.Empty;
                 changedProps["Notes"] = account.notes ?? string.Empty;
                 changedProps["isArchived"] = account.isArchived;
                 changedProps["ModifyDate"] = account.modifyDate;

@@ -10,6 +10,7 @@
         public string? mfaToken { get; set; }
         public string? crmNumber { get; set; }
         public string? phone { get; set; }
+        public string? recoveryEmail { get; set; }
         public string? notes { get; set; }
         public DateTime creationDate { get; set; }
         public DateTime modifyDate { get; set; }

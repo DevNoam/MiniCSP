@@ -36,6 +36,10 @@ namespace _365.Core
             {
                 changedProps["Phone"] = newAccountProp.phone;
             }
+            if (newAccountProp.recoveryEmail != oldAccountProp.recoveryEmail)
+            {
+                changedProps["RecoveryEmail"] = newAccountProp.recoveryEmail;
+            }
             if (newAccountProp.notes != oldAccountProp.notes)
             {
                 changedProps["Notes"] = HttpUtility.HtmlEncode(newAccountProp.notes);

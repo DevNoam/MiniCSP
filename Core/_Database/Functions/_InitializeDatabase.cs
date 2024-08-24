@@ -58,6 +58,7 @@ public static class _InitializeDatabase
                 `MFA` TEXT,
                 `CRM` BLOB NOT NULL,
                 `Phone` TEXT,
+                `RecoveryEmail` TEXT,
                 `Notes` TEXT,
                 `CreationDate` TEXT NOT NULL,
                 `ModifyDate` TEXT,
