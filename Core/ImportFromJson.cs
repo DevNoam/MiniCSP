@@ -20,7 +20,7 @@ namespace _365.Core
             }
 
 
-            var option = MessageBox.Show("Importing won't override existing entries but rather create new entries. Place 'import.json' into to the database folder.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            var option = MessageBox.Show("Importing won't override existing entries but rather create duplicates. Place 'import.json' into to the database folder.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             if (option == DialogResult.Cancel)
                 return false;
 
