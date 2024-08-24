@@ -112,9 +112,9 @@ namespace _365
 
         void CreateAccountSubmit(NewEntry tmpEntry)
         {
-            var choice = MessageBox.Show("You are about to create this account to the list, YOU CANNOT delete new accounts. Continue?", Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (choice == DialogResult.OK)
-            {
+            //var choice = MessageBox.Show("You are about to create this account to the list. Continue?", Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            //if (choice == DialogResult.OK)
+            //{
                 int resultId = DatabaseManager.CreateAccount(tmpEntry);
 
                 accEntry = new NewEntry()
@@ -123,7 +123,7 @@ namespace _365
                     customerName = tmpEntry.customerName
                 };
                 this.Close();
-            }
+            //}
         }
 
         void EditAccountSubmit(NewEntry tmpEntry)

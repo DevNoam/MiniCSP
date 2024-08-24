@@ -620,9 +620,14 @@ namespace _365
 
         private void OpenAdminCenter_Click(object sender, EventArgs e)
         {
+            string url = "https://admin.microsoft.com/";
+            if (!string.IsNullOrEmpty(Email.Text))
+            { 
+                url += "?login_hint=" + Email.Text;
+            }
             Process.Start(new ProcessStartInfo
             {
-                FileName = "https://admin.microsoft.com/",
+                FileName = url,
                 UseShellExecute = true
             });
         }
