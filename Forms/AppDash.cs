@@ -89,7 +89,7 @@ namespace _365
                 }
                 if (menuID == DeveloperInfoContextId)
                 {
-                    MessageBox.Show($"MiniCSP is an app developed by DevNoam for Microsoft 365 resellers. Report bugs to: contact@noamsapir.me", "Developer info");
+                    MessageBox.Show($"MiniCSP is an app developed by DevNoam for Microsoft 365 resellers. Contact info: contact@noamsapir.me", "Developer info");
                 }
 
             }
@@ -147,6 +147,7 @@ namespace _365
                     mfaToken = account.mfaToken;
                     Domain.Text = account.domain;
                     Phone.Text = account.phone;
+                    recoveryEmail.Text = account.recoveryEmail;
                     Notes.Text = HttpUtility.HtmlDecode(account.notes);
                     isArchived.Checked = (account.isArchived == 1) ? true : false;
                     ModifiedDate.Text = "Last modified: " + account.modifyDate;
@@ -356,6 +357,15 @@ namespace _365
                     Clipboard.SetText(Phone.Text);
             }
         }
+        private void CopyRecoveryEmail(object sender, EventArgs e)
+        {
+            if (!editMode)
+            {
+                recoveryEmail.SelectAll();
+                if (!string.IsNullOrEmpty(recoveryEmail.Text))
+                    Clipboard.SetText(recoveryEmail.Text);
+            }
+        }
         private void CopyMFA(object sender, EventArgs e)
         {
             if (!editMode)
@@ -455,6 +465,7 @@ namespace _365
                     isArchived = Convert.ToInt32(isArchived.Checked),
                     mfaToken = mfaToken,
                     phone = Phone.Text,
+                    recoveryEmail = recoveryEmail.Text,
                     password = Password.Text,
                     notes = Notes.Text
                 };
@@ -473,13 +484,14 @@ namespace _365
                     isArchived = Convert.ToInt32(isArchived.Checked),
                     mfaToken = MFA.Text,
                     phone = Phone.Text,
+                    recoveryEmail = recoveryEmail.Text,
                     password = Password.Text,
                     notes = Notes.Text,
                     modifyDate = DateTime.Now
                 };
 
                 if (newAccountProp.domain == EditAccount.oldAccountProp.domain && newAccountProp.email == EditAccount.oldAccountProp.email &&
-                    newAccountProp.isArchived == EditAccount.oldAccountProp.isArchived && newAccountProp.phone == EditAccount.oldAccountProp.phone &&
+                    newAccountProp.isArchived == EditAccount.oldAccountProp.isArchived && newAccountProp.phone == EditAccount.oldAccountProp.phone && newAccountProp.recoveryEmail == EditAccount.oldAccountProp.recoveryEmail &&
                     newAccountProp.password == EditAccount.oldAccountProp.password && newAccountProp.notes == EditAccount.oldAccountProp.notes && newAccountProp.mfaToken == EditAccount.oldAccountProp.mfaToken)
                 {
                     CancelPuslish();
@@ -519,6 +531,7 @@ namespace _365
             Email.Text = EditAccount.oldAccountProp.email;
             isArchived.Checked = (EditAccount.oldAccountProp.isArchived == 1) ? true : false;
             Phone.Text = EditAccount.oldAccountProp.phone;
+            recoveryEmail.Text = EditAccount.oldAccountProp.recoveryEmail;
             Password.Text = EditAccount.oldAccountProp.password;
             Notes.Text = EditAccount.oldAccountProp.notes;
             mfaToken = EditAccount.oldAccountProp.mfaToken;
@@ -541,6 +554,7 @@ namespace _365
                 MFA.Enabled = true;
                 Domain.ReadOnly = false;
                 Phone.ReadOnly = false;
+                recoveryEmail.ReadOnly = false;
                 Notes.ReadOnly = false;
                 isArchived.Enabled = true;
                 MFATimer.Visible = false;
@@ -563,6 +577,7 @@ namespace _365
                 MFA.ReadOnly = true;
                 Domain.ReadOnly = true;
                 Phone.ReadOnly = true;
+                recoveryEmail.ReadOnly = true;
                 Notes.ReadOnly = true;
                 isArchived.Enabled = false;
                 MFATimer.Visible = true;
@@ -622,7 +637,7 @@ namespace _365
         {
             string url = "https://admin.microsoft.com/";
             if (!string.IsNullOrEmpty(Email.Text))
-            { 
+            {
                 url += "?login_hint=" + Email.Text;
             }
             Process.Start(new ProcessStartInfo
@@ -649,7 +664,8 @@ namespace _365
                     Password.Text = result;
                 else
                     return;
-            }else
+            }
+            else
                 Password.Text = result;
         }
     }

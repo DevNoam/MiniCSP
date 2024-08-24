@@ -41,6 +41,8 @@
             Panel panel1;
             Label label4;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppDash));
+            PictureBox pictureBox1;
+            Label label9;
             SelectACustomer = new Panel();
             CustomerName = new Label();
             label8 = new Label();
@@ -48,20 +50,21 @@
             label3 = new Label();
             label2 = new Label();
             Logs = new Button();
-            Notes = new RichTextBox();
             Domain = new TextBox();
             Password = new TextBox();
             MFA = new TextBox();
             isArchived = new CheckBox();
             Email = new TextBox();
             MFATimer = new ProgressBar();
-            label7 = new Label();
             Phone = new TextBox();
             Edit = new Button();
             Crm = new Label();
             UploadQR = new Button();
             OpenAdminCenter = new Button();
             GeneratePassword = new Button();
+            Notes = new RichTextBox();
+            recoveryEmail = new TextBox();
+            label7 = new Label();
             AccountList = new ListBox();
             AccountSearcher = new TextBox();
             AddAccount = new Button();
@@ -79,6 +82,8 @@
             pictureBox8 = new PictureBox();
             panel1 = new Panel();
             label4 = new Label();
+            pictureBox1 = new PictureBox();
+            label9 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -88,6 +93,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             panel1.SuspendLayout();
             SelectACustomer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ControlPanel.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -125,10 +131,10 @@
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.Enabled = false;
             pictureBox2.Image = Properties.Resources.bookmark_dynamic_gradient;
-            pictureBox2.Location = new Point(6, 321);
+            pictureBox2.Location = new Point(6, 371);
             pictureBox2.Margin = new Padding(3, 4, 3, 4);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(42, 43);
+            pictureBox2.Size = new Size(42, 36);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 10;
             pictureBox2.TabStop = false;
@@ -150,6 +156,7 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Enabled = false;
             label1.Location = new Point(45, 78);
             label1.Name = "label1";
             label1.Size = new Size(89, 15);
@@ -159,6 +166,7 @@
             // label5
             // 
             label5.AutoSize = true;
+            label5.Enabled = false;
             label5.Location = new Point(44, 224);
             label5.Name = "label5";
             label5.Size = new Size(49, 15);
@@ -168,6 +176,7 @@
             // label6
             // 
             label6.AutoSize = true;
+            label6.Enabled = false;
             label6.Location = new Point(44, 271);
             label6.Name = "label6";
             label6.Size = new Size(80, 15);
@@ -226,7 +235,6 @@
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(Logs);
-            panel1.Controls.Add(Notes);
             panel1.Controls.Add(Domain);
             panel1.Controls.Add(Password);
             panel1.Controls.Add(MFA);
@@ -234,11 +242,9 @@
             panel1.Controls.Add(Email);
             panel1.Controls.Add(pictureBox3);
             panel1.Controls.Add(MFATimer);
-            panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(pictureBox4);
             panel1.Controls.Add(pictureBox7);
             panel1.Controls.Add(pictureBox6);
-            panel1.Controls.Add(label7);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(Phone);
@@ -248,6 +254,12 @@
             panel1.Controls.Add(UploadQR);
             panel1.Controls.Add(OpenAdminCenter);
             panel1.Controls.Add(GeneratePassword);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(label9);
+            panel1.Controls.Add(Notes);
+            panel1.Controls.Add(recoveryEmail);
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(pictureBox2);
             panel1.Location = new Point(224, 6);
             panel1.Name = "panel1";
             panel1.Size = new Size(383, 585);
@@ -298,16 +310,18 @@
             // ModifiedDate
             // 
             ModifiedDate.AutoSize = true;
+            ModifiedDate.Enabled = false;
             ModifiedDate.Location = new Point(3, 567);
             ModifiedDate.Name = "ModifiedDate";
             ModifiedDate.Size = new Size(140, 15);
             ModifiedDate.TabIndex = 35;
-            ModifiedDate.Text = "LastModified: 13/04/2024";
+            ModifiedDate.Text = "LastModified: 01/01/2000";
             ModifiedDate.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label3
             // 
             label3.AutoSize = true;
+            label3.Enabled = false;
             label3.Location = new Point(45, 176);
             label3.Name = "label3";
             label3.Size = new Size(31, 15);
@@ -317,6 +331,7 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.Enabled = false;
             label2.Location = new Point(44, 126);
             label2.Name = "label2";
             label2.Size = new Size(57, 15);
@@ -335,16 +350,6 @@
             Logs.Text = "Logs";
             Logs.UseVisualStyleBackColor = false;
             Logs.Visible = false;
-            // 
-            // Notes
-            // 
-            Notes.Location = new Point(46, 340);
-            Notes.Margin = new Padding(3, 4, 3, 4);
-            Notes.Name = "Notes";
-            Notes.ReadOnly = true;
-            Notes.Size = new Size(257, 123);
-            Notes.TabIndex = 7;
-            Notes.Text = "";
             // 
             // Domain
             // 
@@ -410,6 +415,7 @@
             // 
             MFATimer.AccessibleRole = AccessibleRole.None;
             MFATimer.BackColor = Color.Yellow;
+            MFATimer.Enabled = false;
             MFATimer.ForeColor = Color.DeepSkyBlue;
             MFATimer.Location = new Point(44, 213);
             MFATimer.Margin = new Padding(3, 4, 3, 4);
@@ -418,15 +424,6 @@
             MFATimer.Size = new Size(169, 6);
             MFATimer.Style = ProgressBarStyle.Continuous;
             MFATimer.TabIndex = 50;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(46, 321);
-            label7.Name = "label7";
-            label7.Size = new Size(38, 15);
-            label7.TabIndex = 32;
-            label7.Text = "Notes";
             // 
             // Phone
             // 
@@ -542,6 +539,59 @@
             GeneratePassword.Visible = false;
             GeneratePassword.Click += GeneratePassword_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.Enabled = false;
+            pictureBox1.Image = Properties.Resources.mail_dynamic_gradient;
+            pictureBox1.Location = new Point(6, 322);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(42, 43);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 56;
+            pictureBox1.TabStop = false;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Enabled = false;
+            label9.Location = new Point(47, 323);
+            label9.Name = "label9";
+            label9.Size = new Size(87, 15);
+            label9.TabIndex = 55;
+            label9.Text = "Recovery email";
+            // 
+            // Notes
+            // 
+            Notes.Location = new Point(47, 388);
+            Notes.Margin = new Padding(3, 4, 3, 4);
+            Notes.Name = "Notes";
+            Notes.ReadOnly = true;
+            Notes.Size = new Size(257, 116);
+            Notes.TabIndex = 8;
+            Notes.Text = "";
+            // 
+            // recoveryEmail
+            // 
+            recoveryEmail.AllowDrop = true;
+            recoveryEmail.Location = new Point(47, 342);
+            recoveryEmail.Margin = new Padding(3, 4, 3, 4);
+            recoveryEmail.Name = "recoveryEmail";
+            recoveryEmail.ReadOnly = true;
+            recoveryEmail.Size = new Size(257, 23);
+            recoveryEmail.TabIndex = 7;
+            recoveryEmail.Click += CopyRecoveryEmail;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(48, 371);
+            label7.Name = "label7";
+            label7.Size = new Size(38, 15);
+            label7.TabIndex = 32;
+            label7.Text = "Notes";
+            // 
             // AccountList
             // 
             AccountList.BackColor = Color.FromArgb(113, 113, 113);
@@ -648,6 +698,7 @@
             panel1.PerformLayout();
             SelectACustomer.ResumeLayout(false);
             SelectACustomer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ControlPanel.ResumeLayout(false);
             ControlPanel.PerformLayout();
             panel2.ResumeLayout(false);
@@ -691,5 +742,6 @@
         private Panel panel2;
         private Button OpenAdminCenter;
         private Button GeneratePassword;
+        private TextBox recoveryEmail;
     }
 }

@@ -18,7 +18,7 @@ namespace _365.Core.Database.Functions
             search = HttpUtility.HtmlEncode(search);
             List<AccountListEntry> Accounts = new List<AccountListEntry>();
             // SQL query to retrieve customer entries
-            string query = $"SELECT * FROM Account WHERE `CustomerName` LIKE '%{search}%' OR `Domain` LIKE '%{search}%' OR `Email` LIKE '%{search}%' OR `CRM` LIKE '%{search}%' OR `Phone` LIKE '%{search}%'";
+            string query = $"SELECT * FROM Account WHERE `CustomerName` LIKE '%{search}%' OR `Domain` LIKE '%{search}%' OR `Email` LIKE '%{search}%' OR `CRM` LIKE '%{search}%' OR `Phone` LIKE '%{search}%' OR `RecoveryEmail` LIKE '%{search}%'";
 
             // Open connection to the database
             using (SqliteConnection connection = new SqliteConnection(DatabaseManager.connectionString))
