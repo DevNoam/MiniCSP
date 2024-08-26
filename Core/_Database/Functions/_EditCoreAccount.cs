@@ -17,7 +17,7 @@ namespace _365.Core.Database.Functions
         {
             string query = $@"
                 UPDATE Account 
-                SET CustomerName = '{HttpUtility.HtmlEncode(changedProps.customerName)}', CRM = '{HttpUtility.HtmlEncode(changedProps.crmNumber)}', ModifyDate = '{DateTime.Now}'
+                SET CustomerName = '{HttpUtility.HtmlEncode(changedProps.customerName)}', CRM = '{HttpUtility.HtmlEncode(changedProps.crmNumber)}', ModifyDate = '{DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")}'
                 WHERE Id = '{accountId}'";
 
             // Open connection to the database

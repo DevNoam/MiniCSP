@@ -682,6 +682,7 @@
             ForeColor = SystemColors.Control;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "AppDash";

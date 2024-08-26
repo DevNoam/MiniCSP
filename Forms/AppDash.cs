@@ -37,6 +37,7 @@ namespace _365
         private const int ExportToJsonContextId = 1003;
         private const int ImportFromJsonContextId = 1004;
         private const int DeveloperInfoContextId = 1005;
+        private const int RefreshDatabaseList = 1006;
         protected override CreateParams CreateParams
         {
             get
@@ -55,12 +56,14 @@ namespace _365
             IntPtr systemMenuHandle = GetSystemMenu(this.Handle, false);
             if (systemMenuHandle != IntPtr.Zero)
             {
-                AppendMenu(systemMenuHandle, MF_STRING, ChangeDBContextId, "Set Database");
+                AppendMenu(systemMenuHandle, MF_STRING, ChangeDBContextId, "Set Database\tF3");
                 AppendMenu(systemMenuHandle, MF_SEPARATOR, 0, string.Empty);
                 AppendMenu(systemMenuHandle, MF_STRING, ExportToJsonContextId, "Export to json");
                 AppendMenu(systemMenuHandle, MF_STRING, ImportFromJsonContextId, "Import from json");
                 AppendMenu(systemMenuHandle, MF_SEPARATOR, 0, string.Empty);
-                AppendMenu(systemMenuHandle, MF_STRING, DeveloperInfoContextId, "Developer Info");
+                AppendMenu(systemMenuHandle, MF_STRING, RefreshDatabaseList, "Refresh accounts\tF5");
+                AppendMenu(systemMenuHandle, MF_SEPARATOR, 0, string.Empty);
+                AppendMenu(systemMenuHandle, MF_STRING, DeveloperInfoContextId, "Developer Info\tF1");
             }
         }
         protected override void WndProc(ref Message m)
@@ -92,9 +95,32 @@ namespace _365
                 {
                     MessageBox.Show($"MiniCSP is an app developed by DevNoam for Microsoft 365 resellers. Contact info: contact@noamsapir.me", "Developer info");
                 }
+                if (menuID == RefreshDatabaseList)
+                {
+                    FetchAll(selectedId);
+                }
 
             }
         }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.F1))
+            {
+                MessageBox.Show($"MiniCSP is an app developed by DevNoam for Microsoft 365 resellers. Contact info: contact@noamsapir.me", "Developer info");
+            }
+            if (keyData == (Keys.F3))
+            {
+                DatabaseManager.ReplaceDatabase();
+            }
+            if (keyData == (Keys.F5))
+            {
+                FetchAll(selectedId);
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         #endregion
         public AppDash()
         {
@@ -412,7 +438,7 @@ namespace _365
                     FetchAll(selectedId);
                 }
 
-                ModifiedDate.Text = DateTime.Now.ToString();
+                ModifiedDate.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
             }
         }
 
@@ -488,7 +514,7 @@ namespace _365
                     recoveryEmail = recoveryEmail.Text,
                     password = Password.Text,
                     notes = Notes.Text,
-                    modifyDate = DateTime.Now
+                    modifyDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"))
                 };
 
                 if (newAccountProp.domain == EditAccount.oldAccountProp.domain && newAccountProp.email == EditAccount.oldAccountProp.email &&
@@ -629,7 +655,7 @@ namespace _365
                 }
                 else if (string.IsNullOrWhiteSpace(Email.Text))
                     Email.Text = TOTP.mail;
-                else if(TOTP.mail == "MINICSPFAILEDTOREADMAIL")
+                else if (TOTP.mail == "MINICSPFAILEDTOREADMAIL")
                 {
                     //Do nothing, thats okay.
                 }
@@ -677,6 +703,11 @@ namespace _365
             }
             else
                 Password.Text = result;
+        }
+
+        private void AppDash_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

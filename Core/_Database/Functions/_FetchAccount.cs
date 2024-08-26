@@ -49,7 +49,7 @@ namespace _365.Core.Database.Functions
                                 phone = reader.IsDBNull(reader.GetOrdinal("Phone")) ? null : reader.GetString(reader.GetOrdinal("Phone")),
                                 recoveryEmail = reader.IsDBNull(reader.GetOrdinal("RecoveryEmail")) ? null : reader.GetString(reader.GetOrdinal("RecoveryEmail")),
                                 notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? null : reader.GetString(reader.GetOrdinal("Notes")),
-                                modifyDate = reader.IsDBNull(reader.GetOrdinal("ModifyDate")) ? DateTime.Now : DateTime.Parse(reader.GetString(reader.GetOrdinal("ModifyDate"))),
+                                modifyDate = reader.IsDBNull(reader.GetOrdinal("ModifyDate")) ? DateTime.Parse(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")) : DateTime.Parse(reader.GetString(reader.GetOrdinal("ModifyDate"))),
                                 isArchived = reader.IsDBNull(reader.GetOrdinal("isArchived")) ? 0 : reader.GetInt32(reader.GetOrdinal("isArchived"))
                                 //creationDate = reader.GetString(reader.GetOrdinal("CustomerName")),
                             };

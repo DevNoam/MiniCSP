@@ -16,7 +16,7 @@ namespace _365.Core.Database.Functions
         {
             string query = $@"
                 INSERT INTO Account (CustomerName, CRM, Domain, creationDate)
-                VALUES ('{HttpUtility.HtmlEncode(entry.customerName)}', '{HttpUtility.HtmlEncode(entry.crmNumber)}', '{HttpUtility.HtmlEncode(entry.tenantDomain)}', '{DateTime.Now.ToString()}');
+                VALUES ('{HttpUtility.HtmlEncode(entry.customerName)}', '{HttpUtility.HtmlEncode(entry.crmNumber)}', '{HttpUtility.HtmlEncode(entry.tenantDomain)}', '{DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")}');
                 SELECT last_insert_rowid();";
 
             using (SqliteConnection connection = new SqliteConnection(DatabaseManager.connectionString))
