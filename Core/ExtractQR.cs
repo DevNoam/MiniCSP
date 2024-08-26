@@ -54,7 +54,16 @@ namespace _365.Core
             // Extract email
             int emailIndex = decodedData.IndexOf("totp/") + 5;
             int issuerIndex = decodedData.IndexOf("?secret=");
-            qRTOTP.mail = issuerIndex != -1 ? decodedData.Substring(emailIndex, issuerIndex - emailIndex).Split(':')[1] : null;
+
+            try
+            {
+                qRTOTP.mail = issuerIndex != -1 ? decodedData.Substring(emailIndex, issuerIndex - emailIndex).Split(':')[1] : null;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Extracing mail account from QR code failed. Validation failed, procceed with caution.", System.Windows.Forms.Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                qRTOTP.mail = "MINICSPFAILEDTOREADMAIL";
+            }
 
             // Extract secret key
             int secretIndex = decodedData.IndexOf("secret=");

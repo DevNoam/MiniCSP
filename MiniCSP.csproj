@@ -12,7 +12,7 @@
     <ApplicationIcon>Properties\Icons\AppIcon.ico</ApplicationIcon>
     <Company>DevNoam (noamsapir.me)</Company>
     <Authors>DevNoam (noamsapir.me)</Authors>
-    <Version>0.9</Version>
+    <Version>0.9.0.1</Version>
     <Title>MiniCSP - Credentials manager</Title>
     <Copyright>DevNoam (noamsapir.me)</Copyright>
     <Description>View and manage CSP 365 global admins credentials</Description>

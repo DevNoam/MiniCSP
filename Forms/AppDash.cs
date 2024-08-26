@@ -4,6 +4,7 @@ using _365.Core.Properties;
 using Sungaila.ImmersiveDarkMode.WinForms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics.X86;
 using System.Web;
 
 
@@ -497,6 +498,11 @@ namespace _365
                     CancelPuslish();
                     return;
                 }
+                if (MFA.Text.Length == 1)
+                {
+                    MessageBox.Show("Invalid MFA key", System.Windows.Forms.Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 var selection = MessageBox.Show("Save?", System.Windows.Forms.Application.ProductName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
@@ -623,10 +629,14 @@ namespace _365
                 }
                 else if (string.IsNullOrWhiteSpace(Email.Text))
                     Email.Text = TOTP.mail;
+                else if(TOTP.mail == "MINICSPFAILEDTOREADMAIL")
+                {
+                    //Do nothing, thats okay.
+                }
                 else
                 {
-                    MessageBox.Show("Mail does not match this MFA key!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
+                    MessageBox.Show("Warning! mail does not match this MFA key!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //return;
                 }
 
                 MFA.Text = TOTP.secret;
